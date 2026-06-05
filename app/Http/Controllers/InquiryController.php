@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Inquiry;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class InquiryController extends Controller
 {
@@ -22,7 +23,7 @@ class InquiryController extends Controller
             'body' => ['required', 'string', 'max:1000'],
         ]);
 
-        Inquiry::create([
+        $inquiry = Inquiry::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'title' => $validated['title'],
@@ -30,6 +31,13 @@ class InquiryController extends Controller
             'body' => $validated['body'],
             'status' => '未対応',
             'admin_reply' => null,
+        ]);
+    
+        Log::info('問い合わせが登録されました。', [
+            'inquiry_id' => $inquiry->id,
+            'title' => $inquiry->title,
+            'category' => $inquiry->category,
+            'status' => $inquiry->status,
         ]);
 
         return redirect()
@@ -95,7 +103,17 @@ class InquiryController extends Controller
             'admin_reply' => ['nullable', 'string', 'max:1000'],
         ]);
 
+        $beforeStatus = $inquiry->status;
+        $beforeAdminReply = $inquiry->admin_reply;
+        
         $inquiry->update($validated);
+
+        Log::info('問い合わせ情報が更新されました。', [
+            'inquiry_id' => $inquiry->id,
+            'before_status' => $beforeStatus,
+            'after_status' => $inquiry->status,
+            'admin_reply_changed' => $beforeAdminReply !== $inquiry->admin_reply,
+        ]);
 
         return redirect()
             ->route('admin.inquiries.index')
@@ -104,6 +122,12 @@ class InquiryController extends Controller
 
     public function destroy(Inquiry $inquiry)
     {
+        Log::warning('問い合わせが削除されました。', [
+            'inquiry_id' => $inquiry->id,
+            'title' => $inquiry->title,
+            'status' => $inquiry->status,
+        ]);
+
         $inquiry->delete();
 
         return redirect()
