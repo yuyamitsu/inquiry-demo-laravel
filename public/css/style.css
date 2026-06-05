@@ -390,3 +390,67 @@ textarea {
 .emptyText {
     color: #6b7280;
 }
+
+.loginWrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.loginCard {
+    width: 100%;
+    max-width: 480px;
+    padding: 32px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+}
+
+.loginCard h1 {
+    margin-bottom: 8px;
+}
+
+.loginCard p {
+    margin-bottom: 16px;
+    color: #6b7280;
+}
+
+.loginDemoInfo {
+    margin-top: 24px;
+    padding: 16px;
+    background: #f9fafb;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.loginDemoInfo p {
+    margin: 4px 0;
+}
+.siteHeader {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.siteHeaderInner {
+    width: min(960px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 16px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.siteTitle {
+    color: #111827;
+    font-size: 18px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.siteTitle:hover {
+    color: #2563eb;
+}
+
+.logoutForm {
+    margin: 0;
+}

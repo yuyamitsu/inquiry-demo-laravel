@@ -8,6 +8,23 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
+    <header class="siteHeader">
+        <div class="siteHeaderInner">
+            <a href="{{ route('inquiries.create') }}" class="siteTitle">
+                問い合わせ管理Demo
+            </a>
+
+            @auth
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="button subButton">
+                        ログアウト
+                    </button>
+                </form>
+            @endauth
+        </div>
+    </header>
+
     <main class="container">
         @if (session('success'))
             <div class="successMessage">
