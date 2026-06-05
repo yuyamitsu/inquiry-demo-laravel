@@ -25,7 +25,8 @@ class InquiryController extends Controller
             'body' => ['required', 'string', 'max:1000'],
         ]);
 
-        Inquiry::create([
+        $inquiry = Inquiry::create([
+            'user_id' => Auth::id(),
             'name' => $validated['name'],
             'email' => $validated['email'],
             'title' => $validated['title'],
@@ -35,13 +36,22 @@ class InquiryController extends Controller
             'admin_reply' => null,
         ]);
 
+        if (Auth::user()->role === 'admin') {
+            return redirect()
+                ->route('admin.inquiries.index')
+                ->with('success', 'お問い合わせを登録しました。');
+        }
+
         return redirect()
-            ->route('admin.inquiries.index')
+            ->route('my.inquiries.show', $inquiry)
             ->with('success', 'お問い合わせを登録しました。');
     }
-
     public function index(Request $request)
     {
+        if (Auth::user()->role !== 'admin') {
+            abort(403);
+        }
+        
         $keyword = $request->input('keyword');
         $status = $request->input('status');
         $category = $request->input('category');
@@ -92,12 +102,35 @@ class InquiryController extends Controller
 
     public function show(Inquiry $inquiry)
     {
+        if (Auth::user()->role !== 'admin') {
+            abort(403);
+        }
+
         $logs = $inquiry->logs()
             ->with('user')
             ->oldest()
             ->get();
 
         return view('admin.inquiries.show', compact('inquiry', 'logs'));
+    }
+
+    public function myIndex()
+    {
+        $inquiries = Inquiry::where('user_id', Auth::id())
+            ->orderByDesc('created_at')
+            ->orderByDesc('id')
+            ->paginate(10);
+
+        return view('my.inquiries.index', compact('inquiries'));
+    }
+
+    public function myShow(Inquiry $inquiry)
+    {
+        if ($inquiry->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        return view('my.inquiries.show', compact('inquiry'));
     }
 
     public function update(Request $request, Inquiry $inquiry)
