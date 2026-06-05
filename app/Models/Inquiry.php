@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Inquiry extends Model
 {
     protected $fillable = [
+        'user_id',
         'name',
         'email',
         'title',
@@ -19,5 +20,10 @@ class Inquiry extends Model
     public function logs()
     {
         return $this->hasMany(InquiryLog::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
