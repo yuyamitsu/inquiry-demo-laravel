@@ -73,5 +73,37 @@
                 一覧に戻る
             </a>
         </form>
+        <div class="historyArea">
+            <h2>変更履歴</h2>
+
+            @forelse ($logs as $log)
+                <div class="historyItem">
+                    <div class="historyMeta">
+                        <span>{{ $log->created_at->format('Y/m/d H:i') }}</span>
+                        <span>{{ $log->action }}</span>
+                    </div>
+
+                    <p class="historyMessage">
+                        {{ $log->message }}
+                    </p>
+
+                    @if ($log->field_name && ($log->before_value || $log->after_value))
+                        <div class="historyDetail">
+                            <span class="historyField">{{ $log->field_name }}</span>
+
+                            @if ($log->before_value !== null)
+                                <span class="historyBefore">変更前：{{ $log->before_value }}</span>
+                            @endif
+
+                            @if ($log->after_value !== null)
+                                <span class="historyAfter">変更後：{{ $log->after_value }}</span>
+                            @endif
+                        </div>
+                    @endif
+                </div>
+            @empty
+                <p class="emptyText">変更履歴はありません。</p>
+            @endforelse
+        </div>
     </section>
 @endsection

@@ -15,4 +15,9 @@ class Inquiry extends Model
         'status',
         'admin_reply',
     ];
+    
+    public function logs()
+    {
+        return $this->hasMany(InquiryLog::class);
+    }
 }

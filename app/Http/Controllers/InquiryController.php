@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Inquiry;
-use Illuminate\Http\Request;
+use App\Models\InquiryLog;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
 
 class InquiryController extends Controller
 {
@@ -23,7 +24,7 @@ class InquiryController extends Controller
             'body' => ['required', 'string', 'max:1000'],
         ]);
 
-        $inquiry = Inquiry::create([
+        Inquiry::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'title' => $validated['title'],
@@ -31,13 +32,6 @@ class InquiryController extends Controller
             'body' => $validated['body'],
             'status' => '未対応',
             'admin_reply' => null,
-        ]);
-    
-        Log::info('問い合わせが登録されました。', [
-            'inquiry_id' => $inquiry->id,
-            'title' => $inquiry->title,
-            'category' => $inquiry->category,
-            'status' => $inquiry->status,
         ]);
 
         return redirect()
@@ -70,7 +64,11 @@ class InquiryController extends Controller
             $query->where('category', $category);
         }
 
-        $inquiries = $query->latest()->paginate(10)->withQueryString();
+        $inquiries = $query
+            ->orderByDesc('created_at')
+            ->orderByDesc('id')
+            ->paginate(10)
+            ->withQueryString();
 
         $totalCount = Inquiry::count();
         $newCount = Inquiry::where('status', '未対応')->count();
@@ -93,7 +91,9 @@ class InquiryController extends Controller
 
     public function show(Inquiry $inquiry)
     {
-        return view('admin.inquiries.show', compact('inquiry'));
+        $logs = $inquiry->logs()->oldest()->get();
+        
+        return view('admin.inquiries.show', compact('inquiry', 'logs'));
     }
 
     public function update(Request $request, Inquiry $inquiry)
@@ -105,15 +105,30 @@ class InquiryController extends Controller
 
         $beforeStatus = $inquiry->status;
         $beforeAdminReply = $inquiry->admin_reply;
-        
+
         $inquiry->update($validated);
 
-        Log::info('問い合わせ情報が更新されました。', [
-            'inquiry_id' => $inquiry->id,
-            'before_status' => $beforeStatus,
-            'after_status' => $inquiry->status,
-            'admin_reply_changed' => $beforeAdminReply !== $inquiry->admin_reply,
-        ]);
+        if ($beforeStatus !== $inquiry->status) {
+            InquiryLog::create([
+                'inquiry_id' => $inquiry->id,
+                'action' => 'updated',
+                'field_name' => 'status',
+                'before_value' => $beforeStatus,
+                'after_value' => $inquiry->status,
+                'message' => "ステータスを「{$beforeStatus}」から「{$inquiry->status}」に変更しました。",
+            ]);
+        }
+
+        if ($beforeAdminReply !== $inquiry->admin_reply) {
+            InquiryLog::create([
+                'inquiry_id' => $inquiry->id,
+                'action' => 'updated',
+                'field_name' => 'admin_reply',
+                'before_value' => $beforeAdminReply,
+                'after_value' => $inquiry->admin_reply,
+                'message' => '管理者返答を更新しました。',
+            ]);
+        }
 
         return redirect()
             ->route('admin.inquiries.index')
