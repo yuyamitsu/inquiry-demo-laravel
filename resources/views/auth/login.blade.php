@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', '管理者ログイン')
+@section('title', 'ログイン')
 
 @section('content')
     <div class="loginWrapper">
         <div class="loginCard">
-            <h1>管理者ログイン</h1>
+            <h1>ログイン</h1>
             <p>問い合わせ管理画面にアクセスするにはログインしてください。</p>
 
             @if (session('success'))
@@ -54,8 +54,13 @@
             </form>
 
             <div class="loginDemoInfo">
-                <p>Demo用ログイン情報</p>
+                <p>Demo用管理者ログイン情報</p>
                 <p>メールアドレス：admin@example.com</p>
+                <p>パスワード：password</p>
+            </div>
+            <div class="loginDemoInfo">
+                <p>Demo用一般ユーザーログイン情報</p>
+                <p>メールアドレス：user@example.com</p>
                 <p>パスワード：password</p>
             </div>
         </div>
