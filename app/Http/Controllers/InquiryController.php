@@ -89,7 +89,7 @@ class InquiryController extends Controller
     public function update(Request $request, Inquiry $inquiry)
     {
         $validated = $request->validate([
-            'status' => ['required', 'string', 'max:20'],
+            'status' => ['required', 'in:未対応,対応中,回答済み'],
             'admin_reply' => ['nullable', 'string', 'max:1000'],
         ]);
 
