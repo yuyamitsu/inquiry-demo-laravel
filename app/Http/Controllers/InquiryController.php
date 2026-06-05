@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Inquiry;
 use App\Models\InquiryLog;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class InquiryController extends Controller
 {
@@ -91,8 +92,11 @@ class InquiryController extends Controller
 
     public function show(Inquiry $inquiry)
     {
-        $logs = $inquiry->logs()->oldest()->get();
-        
+        $logs = $inquiry->logs()
+            ->with('user')
+            ->oldest()
+            ->get();
+
         return view('admin.inquiries.show', compact('inquiry', 'logs'));
     }
 
@@ -111,6 +115,7 @@ class InquiryController extends Controller
         if ($beforeStatus !== $inquiry->status) {
             InquiryLog::create([
                 'inquiry_id' => $inquiry->id,
+                'user_id' => Auth::id(),
                 'action' => 'updated',
                 'field_name' => 'status',
                 'before_value' => $beforeStatus,
@@ -122,6 +127,7 @@ class InquiryController extends Controller
         if ($beforeAdminReply !== $inquiry->admin_reply) {
             InquiryLog::create([
                 'inquiry_id' => $inquiry->id,
+                'user_id' => Auth::id(),
                 'action' => 'updated',
                 'field_name' => 'admin_reply',
                 'before_value' => $beforeAdminReply,
@@ -131,7 +137,7 @@ class InquiryController extends Controller
         }
 
         return redirect()
-            ->route('admin.inquiries.index')
+            ->route('admin.inquiries.show', $inquiry)
             ->with('success', '問い合わせ情報を保存しました。');
     }
 

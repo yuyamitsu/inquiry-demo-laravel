@@ -80,7 +80,7 @@
                 <div class="historyItem">
                     <div class="historyMeta">
                         <span>{{ $log->created_at->format('Y/m/d H:i') }}</span>
-                        <span>{{ $log->action }}</span>
+                        <span>更新者：{{ $log->user?->name ?? '不明' }}</span>
                     </div>
 
                     <p class="historyMessage">

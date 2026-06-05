@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class InquiryLog extends Model
 {
     protected $fillable = [
         'inquiry_id',
+        'user_id',
         'action',
         'field_name',
         'before_value',
@@ -18,5 +20,10 @@ class InquiryLog extends Model
     public function inquiry()
     {
         return $this->belongsTo(Inquiry::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
