@@ -1,0 +1,13 @@
+erDiagram
+    inquiries {
+        bigint id PK "問い合わせID"
+        varchar name "問い合わせ者名"
+        varchar email "メールアドレス"
+        varchar title "件名"
+        varchar category "カテゴリ"
+        text body "問い合わせ内容"
+        varchar status "ステータス"
+        text admin_reply "管理者返答"
+        timestamp created_at "作成日時"
+        timestamp updated_at "更新日時"
+    }

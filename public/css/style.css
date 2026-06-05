@@ -1,0 +1,331 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    color: #333;
+}
+
+.container {
+    width: min(960px, calc(100% - 32px));
+    margin: 40px auto;
+    background-color: #fff;
+    padding: 32px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+h1 {
+    margin-top: 0;
+    margin-bottom: 24px;
+    font-size: 28px;
+}
+
+h2 {
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+.formGroup {
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #ccd3dc;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.button:hover {
+    background-color: #1d4ed8;
+}
+
+.subButton {
+    background-color: #6b7280;
+}
+
+.subButton:hover {
+    background-color: #4b5563;
+}
+
+.deleteButton {
+    background-color: #ef4444;
+}
+
+.deleteButton:hover {
+    background-color: #dc2626;
+}
+
+.tableWrapper {
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    min-width: 800px;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    border-bottom: 1px solid #e5e7eb;
+    padding: 12px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #f9fafb;
+}
+
+.card {
+    margin-bottom: 24px;
+    padding: 24px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+}
+
+.detailList {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 12px 20px;
+}
+
+.detailList dt {
+    font-weight: bold;
+    color: #555;
+}
+
+.detailList dd {
+    margin: 0;
+}
+
+.status {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 13px;
+}
+
+.statusNew {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.statusProgress {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.statusAnswered {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.statusClosed {
+    background-color: #e5e7eb;
+    color: #374151;
+}
+
+.errorText {
+    margin: 6px 0 0;
+    color: #dc2626;
+    font-size: 14px;
+}
+
+.successMessage {
+    margin-bottom: 20px;
+    padding: 12px 16px;
+    background-color: #dcfce7;
+    color: #166534;
+    border-radius: 8px;
+}
+
+.linkArea {
+    margin-top: 24px;
+}
+
+.pageHeader {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin: 16px auto;
+        padding: 20px;
+    }
+
+    .pageHeader {
+        flex-direction: column;
+    }
+
+    .detailList {
+        grid-template-columns: 1fr;
+    }
+}
+
+.summaryArea {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.summaryCard {
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 16px;
+}
+
+.summaryLabel {
+    display: block;
+    color: #6b7280;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.summaryCard strong {
+    font-size: 28px;
+}
+
+.searchBox {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.searchBox input {
+    flex: 1;
+}
+
+.searchBox select {
+    width: 180px;
+}
+
+.resultText {
+    color: #4b5563;
+    margin-bottom: 12px;
+}
+
+@media (max-width: 768px) {
+    .summaryArea {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .searchBox {
+        flex-direction: column;
+    }
+
+    .searchBox input,
+    .searchBox select,
+    .searchBox button,
+    .searchBox a {
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .summaryArea {
+        grid-template-columns: 1fr;
+    }
+
+    .summaryCard strong {
+        font-size: 24px;
+    }
+}
+
+.paginationArea {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Laravel標準ページネーションの巨大な矢印対策 */
+.paginationArea svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* モバイル用とPC用が両方出るのを抑える */
+.paginationArea nav > div:first-child {
+    display: none;
+}
+
+.paginationArea nav > div:last-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Showing 11 to 20 of ... の表示 */
+.paginationArea p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+/* ページ番号・Previous・Next周り */
+.paginationArea a,
+.paginationArea span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    min-height: 36px;
+    padding: 6px 10px;
+    border: 1px solid #d1d5db;
+    color: #2563eb;
+    text-decoration: none;
+    background-color: #fff;
+    font-size: 14px;
+}
+
+.paginationArea a:hover {
+    background-color: #f3f4f6;
+}
+
+/* 現在ページ */
+.paginationArea span[aria-current="page"] span {
+    background-color: #2563eb;
+    color: #fff;
+    border-color: #2563eb;
+}
+
+/* ページリンクの横並び */
+.paginationArea nav span {
+    gap: 0;
+}
