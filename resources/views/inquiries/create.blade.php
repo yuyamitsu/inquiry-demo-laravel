@@ -9,9 +9,17 @@
             <p>お問い合わせ内容を入力してください。</p>
         </div>
 
-        <a href="{{ route('admin.inquiries.index') }}" class="button subButton">
-            管理者画面へ
-        </a>
+    @auth
+        @if (Auth::user()->role === 'admin')
+            <a href="{{ route('admin.inquiries.index') }}" class="button subButton">
+                管理者画面へ
+            </a>
+        @else
+            <a href="{{ route('my.inquiries.index') }}" class="button subButton">
+                自分の問い合わせ一覧へ
+            </a>
+        @endif
+    @endauth
     </div>
 
     <form method="POST" action="{{ route('inquiries.store') }}">

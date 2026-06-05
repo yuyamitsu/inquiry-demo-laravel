@@ -10,12 +10,24 @@
 <body>
     <header class="siteHeader">
         <div class="siteHeaderInner">
-            <a href="{{ route('inquiries.create') }}" class="siteTitle">
-                問い合わせ管理Demo
-            </a>
+            @auth
+                @if (auth()->user()->role === 'admin')
+                    <a href="{{ route('admin.inquiries.index') }}" class="siteTitle">
+                        問い合わせ管理Demo
+                    </a>
+                @else
+                    <a href="{{ route('my.inquiries.index') }}" class="siteTitle">
+                        問い合わせ管理Demo
+                    </a>
+                @endif
+            @else
+                <a href="{{ route('login') }}" class="siteTitle">
+                    問い合わせ管理Demo
+                </a>
+            @endauth
 
             @auth
-                <form method="POST" action="{{ route('logout') }}">
+                <form method="POST" action="{{ route('logout') }}" class="logoutForm">
                     @csrf
                     <button type="submit" class="button subButton">
                         ログアウト
