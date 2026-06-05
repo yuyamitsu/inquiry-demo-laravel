@@ -34,6 +34,10 @@
             <span class="summaryLabel">回答済み</span>
             <strong>{{ $answeredCount }}</strong>
         </div>
+        <div class="summaryCard">
+            <span class="summaryLabel">クローズ</span>
+            <strong>{{ $closedCount }}</strong>
+        </div>
     </div>
 
     <form method="GET" action="{{ route('admin.inquiries.index') }}" class="searchBox">

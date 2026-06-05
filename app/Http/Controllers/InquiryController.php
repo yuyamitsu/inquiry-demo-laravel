@@ -68,6 +68,7 @@ class InquiryController extends Controller
         $newCount = Inquiry::where('status', '未対応')->count();
         $progressCount = Inquiry::where('status', '対応中')->count();
         $answeredCount = Inquiry::where('status', '回答済み')->count();
+        $closedCount = Inquiry::where('status', 'クローズ')->count();
 
         return view('admin.inquiries.index', compact(
             'inquiries',
@@ -77,7 +78,8 @@ class InquiryController extends Controller
             'totalCount',
             'newCount',
             'progressCount',
-            'answeredCount'
+            'answeredCount',
+            'closedCount'
         ));
     }
 
@@ -89,7 +91,7 @@ class InquiryController extends Controller
     public function update(Request $request, Inquiry $inquiry)
     {
         $validated = $request->validate([
-            'status' => ['required', 'in:未対応,対応中,回答済み'],
+            'status' => ['required', 'in:未対応,対応中,回答済み,クローズ'],
             'admin_reply' => ['nullable', 'string', 'max:1000'],
         ]);
 
