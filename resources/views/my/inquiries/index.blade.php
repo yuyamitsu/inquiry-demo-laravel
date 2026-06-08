@@ -6,10 +6,10 @@
     <div class="pageHeader">
         <div>
             <h1>自分の問い合わせ一覧</h1>
-            <p>自分が登録した問い合わせを確認できます。</p>
+            <p>登録した問い合わせの対応状況を確認できます。</p>
         </div>
 
-        <a href="{{ route('inquiries.create') }}" class="button">
+        <a href="{{ route('inquiries.create') }}" class="button subButton">
             新しく問い合わせる
         </a>
     </div>
@@ -23,19 +23,29 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>件名</th>
-                    <th>カテゴリ</th>
-                    <th>ステータス</th>
-                    <th>受付日時</th>
                     <th>詳細</th>
+                    <th>件名</th>
+                    <th>ステータス</th>
+                    <th>担当者</th>
+                    <th>優先度</th>
+                    <th>対応期限</th>
+                    <th>受付日時</th>
                 </tr>
             </thead>
+
             <tbody>
                 @forelse ($inquiries as $inquiry)
                     <tr>
                         <td>{{ $inquiry->id }}</td>
+
+                        <td>
+                            <a href="{{ route('my.inquiries.show', $inquiry) }}" class="button smallButton">
+                                詳細
+                            </a>
+                        </td>
+
                         <td>{{ $inquiry->title }}</td>
-                        <td>{{ $inquiry->category }}</td>
+
                         <td>
                             @php
                                 $statusClass = match ($inquiry->status) {
@@ -51,17 +61,25 @@
                                 {{ $inquiry->status }}
                             </span>
                         </td>
-                        <td>{{ $inquiry->created_at->format('Y/m/d H:i') }}</td>
+
+                        <td>{{ $inquiry->assignee?->name ?? '未設定' }}</td>
+
+                        <td>{{ $inquiry->priority ?? '未設定' }}</td>
+
                         <td>
-                            <a href="{{ route('my.inquiries.show', $inquiry) }}">
-                                詳細
-                            </a>
+                            @if ($inquiry->due_date)
+                                {{ \Carbon\Carbon::parse($inquiry->due_date)->format('Y/m/d') }}
+                            @else
+                                未設定
+                            @endif
                         </td>
+
+                        <td>{{ $inquiry->created_at->timezone('Asia/Tokyo')->format('Y/m/d H:i') }}</td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6">
-                            まだ問い合わせはありません。
+                        <td colspan="8">
+                            登録した問い合わせはありません。
                         </td>
                     </tr>
                 @endforelse
