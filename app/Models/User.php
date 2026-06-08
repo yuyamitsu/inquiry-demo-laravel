@@ -29,4 +29,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function inquiryComments()
+    {
+        return $this->hasMany(InquiryComment::class);
+    }
+    
 }
