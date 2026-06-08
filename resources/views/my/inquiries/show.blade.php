@@ -44,8 +44,23 @@
                 </span>
             </dd>
 
+            <dt>担当者</dt>
+            <dd>{{ $inquiry->assignee?->name ?? '未設定' }}</dd>
+
+            <dt>優先度</dt>
+            <dd>{{ $inquiry->priority ?? '未設定' }}</dd>
+
+            <dt>対応期限</dt>
+            <dd>
+                @if ($inquiry->due_date)
+                    {{ \Carbon\Carbon::parse($inquiry->due_date)->format('Y/m/d') }}
+                @else
+                    未設定
+                @endif
+            </dd>
+
             <dt>受付日時</dt>
-            <dd>{{ $inquiry->created_at->format('Y/m/d H:i') }}</dd>
+            <dd>{{ $inquiry->created_at->timezone('Asia/Tokyo')->format('Y/m/d H:i') }}</dd>
 
             <dt>お名前</dt>
             <dd>{{ $inquiry->name }}</dd>
@@ -64,8 +79,8 @@
         @forelse ($comments as $comment)
             <div class="commentItem">
                 <div class="commentMeta">
-                    <span>{{ $comment->created_at->format('Y/m/d H:i') }}</span>
-                    <span>{{ $comment->user?->name ?? '不明' }}</span>
+                    <span>{{ $comment->created_at->timezone('Asia/Tokyo')->format('Y/m/d H:i') }}</span>
+                    <span>投稿者：{{ $comment->user?->name ?? '不明' }}</span>
 
                     @if ($comment->user?->role === 'admin')
                         <span class="commentRole adminRole">運営</span>

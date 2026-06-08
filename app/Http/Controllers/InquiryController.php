@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Inquiry;
 use App\Models\InquiryLog;
 use App\Models\InquiryComment;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -117,7 +118,16 @@ class InquiryController extends Controller
             ->oldest()
             ->get();
 
-        return view('admin.inquiries.show', compact('inquiry', 'logs', 'comments'));
+        $assignees = User::where('role', 'admin')
+            ->orderBy('name')
+            ->get();
+
+        return view('admin.inquiries.show', compact(
+            'inquiry',
+            'logs',
+            'comments',
+            'assignees'
+        ));
     }
 
     public function myIndex()
@@ -152,13 +162,17 @@ class InquiryController extends Controller
 
         $validated = $request->validate([
             'status' => ['required', 'in:未対応,対応中,回答済み,クローズ'],
+            'assignee_id' => ['nullable', 'exists:users,id,role,admin'],
+            'priority' => ['nullable', 'in:低,中,高,緊急'],
+            'due_date' => ['nullable', 'date'],
         ]);
 
         $beforeStatus = $inquiry->status;
+        $beforeAssigneeId = $inquiry->assignee_id;
+        $beforePriority = $inquiry->priority;
+        $beforeDueDate = $inquiry->due_date;
 
-        $inquiry->update([
-            'status' => $validated['status'],
-        ]);
+        $inquiry->update($validated);
 
         if ($beforeStatus !== $inquiry->status) {
             InquiryLog::create([
@@ -169,6 +183,48 @@ class InquiryController extends Controller
                 'before_value' => $beforeStatus,
                 'after_value' => $inquiry->status,
                 'message' => "ステータスを「{$beforeStatus}」から「{$inquiry->status}」に変更しました。",
+            ]);
+        }
+
+        if ((string) $beforeAssigneeId !== (string) $inquiry->assignee_id) {
+            $beforeAssigneeName = $beforeAssigneeId
+                ? User::find($beforeAssigneeId)?->name
+                : '未設定';
+
+            $afterAssigneeName = $inquiry->assignee?->name ?? '未設定';
+
+            InquiryLog::create([
+                'inquiry_id' => $inquiry->id,
+                'user_id' => Auth::id(),
+                'action' => 'updated',
+                'field_name' => 'assignee_id',
+                'before_value' => $beforeAssigneeName,
+                'after_value' => $afterAssigneeName,
+                'message' => "担当者を「{$beforeAssigneeName}」から「{$afterAssigneeName}」に変更しました。",
+            ]);
+        }
+
+        if ($beforePriority !== $inquiry->priority) {
+            InquiryLog::create([
+                'inquiry_id' => $inquiry->id,
+                'user_id' => Auth::id(),
+                'action' => 'updated',
+                'field_name' => 'priority',
+                'before_value' => $beforePriority ?? '未設定',
+                'after_value' => $inquiry->priority ?? '未設定',
+                'message' => "優先度を「" . ($beforePriority ?? '未設定') . "」から「" . ($inquiry->priority ?? '未設定') . "」に変更しました。",
+            ]);
+        }
+
+        if ((string) $beforeDueDate !== (string) $inquiry->due_date) {
+            InquiryLog::create([
+                'inquiry_id' => $inquiry->id,
+                'user_id' => Auth::id(),
+                'action' => 'updated',
+                'field_name' => 'due_date',
+                'before_value' => $beforeDueDate ?? '未設定',
+                'after_value' => $inquiry->due_date ?? '未設定',
+                'message' => "対応期限を「" . ($beforeDueDate ?? '未設定') . "」から「" . ($inquiry->due_date ?? '未設定') . "」に変更しました。",
             ]);
         }
 

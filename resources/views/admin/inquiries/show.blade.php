@@ -41,20 +41,84 @@
                 </span>
             </dd>
 
+            <dt>担当者</dt>
+            <dd>{{ $inquiry->assignee?->name ?? '未設定' }}</dd>
+
+            <dt>優先度</dt>
+            <dd>{{ $inquiry->priority ?? '未設定' }}</dd>
+
+            <dt>対応期限</dt>
+            <dd>
+                @if ($inquiry->due_date)
+                    {{ \Carbon\Carbon::parse($inquiry->due_date)->format('Y/m/d') }}
+                @else
+                    未設定
+                @endif
+            </dd>
+
             <dt>問い合わせ内容</dt>
             <dd>{!! nl2br(e($inquiry->body)) !!}</dd>
 
             <dt>受付日時</dt>
-            <dd>{{ $inquiry->created_at->format('Y/m/d H:i') }}</dd>
+            <dd>{{ $inquiry->created_at->timezone('Asia/Tokyo')->format('Y/m/d H:i') }}</dd>
         </dl>
     </section>
 
     <section class="card">
-        <h2>ステータス更新</h2>
+        <h2>管理項目</h2>
 
         <form method="POST" action="{{ route('admin.inquiries.update', $inquiry) }}">
             @csrf
             @method('PUT')
+
+            <div class="formGroup">
+                <label for="assignee_id">担当者</label>
+                <select id="assignee_id" name="assignee_id">
+                    <option value="">未設定</option>
+
+                    @foreach ($assignees as $assignee)
+                        <option
+                            value="{{ $assignee->id }}"
+                            @selected((string) old('assignee_id', $inquiry->assignee_id) === (string) $assignee->id)
+                        >
+                            {{ $assignee->name }}
+                        </option>
+                    @endforeach
+                </select>
+
+                @error('assignee_id')
+                    <p class="errorText">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="formGroup">
+                <label for="priority">優先度</label>
+                <select id="priority" name="priority">
+                    <option value="">未設定</option>
+                    <option value="低" @selected(old('priority', $inquiry->priority) === '低')>低</option>
+                    <option value="中" @selected(old('priority', $inquiry->priority) === '中')>中</option>
+                    <option value="高" @selected(old('priority', $inquiry->priority) === '高')>高</option>
+                    <option value="緊急" @selected(old('priority', $inquiry->priority) === '緊急')>緊急</option>
+                </select>
+
+                @error('priority')
+                    <p class="errorText">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="formGroup">
+                <label for="due_date">対応期限</label>
+                <input
+                    type="date"
+                    id="due_date"
+                    name="due_date"
+                    value="{{ old('due_date', $inquiry->due_date) }}"
+                >
+
+                @error('due_date')
+                    <p class="errorText">{{ $message }}</p>
+                @enderror
+            </div>
 
             <div class="formGroup">
                 <label for="status">ステータス</label>
@@ -71,7 +135,7 @@
             </div>
 
             <button type="submit" class="button">
-                ステータスを保存
+                保存する
             </button>
 
             <a href="{{ route('admin.inquiries.index') }}" class="button subButton">
@@ -86,8 +150,8 @@
         @forelse ($comments as $comment)
             <div class="commentItem">
                 <div class="commentMeta">
-                    <span>{{ $comment->created_at->format('Y/m/d H:i') }}</span>
-                    <span>{{ $comment->user?->name ?? '不明' }}</span>
+                    <span>{{ $comment->created_at->timezone('Asia/Tokyo')->format('Y/m/d H:i') }}</span>
+                    <span>投稿者：{{ $comment->user?->name ?? '不明' }}</span>
 
                     @if ($comment->user?->role === 'admin')
                         <span class="commentRole adminRole">運営</span>
@@ -133,7 +197,7 @@
         @forelse ($logs as $log)
             <div class="historyItem">
                 <div class="historyMeta">
-                    <span>{{ $log->created_at->format('Y/m/d H:i') }}</span>
+                    <span>{{ $log->created_at->timezone('Asia/Tokyo')->format('Y/m/d H:i') }}</span>
                     <span>更新者：{{ $log->user?->name ?? '不明' }}</span>
                 </div>
 
