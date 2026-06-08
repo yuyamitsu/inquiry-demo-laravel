@@ -8,12 +8,6 @@
             <h1>ログイン</h1>
             <p>問い合わせ管理画面にアクセスするにはログインしてください。</p>
 
-            @if (session('success'))
-                <div class="successMessage">
-                    {{ session('success') }}
-                </div>
-            @endif
-
             @if ($errors->any())
                 <div class="errorBox">
                     <ul>
