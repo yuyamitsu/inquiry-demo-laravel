@@ -90,9 +90,9 @@
                     <span>{{ $comment->user?->name ?? '不明' }}</span>
 
                     @if ($comment->user?->role === 'admin')
-                        <span class="commentRole adminRole">管理者</span>
+                        <span class="commentRole adminRole">運営</span>
                     @else
-                        <span class="commentRole userRole">一般ユーザー</span>
+                        <span class="commentRole userRole">利用者</span>
                     @endif
                 </div>
 
