@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->group(function () {
     Route::get('/', [InquiryController::class, 'create'])->name('inquiries.create');
     Route::post('/inquiries', [InquiryController::class, 'store'])->name('inquiries.store');
+    Route::post('/inquiries/{inquiry}/comments', [InquiryController::class, 'storeComment'])->name('inquiries.comments.store');
 });
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
