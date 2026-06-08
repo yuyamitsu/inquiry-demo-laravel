@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Inquiry;
 use App\Models\InquiryLog;
+use App\Models\InquiryComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -111,7 +112,12 @@ class InquiryController extends Controller
             ->oldest()
             ->get();
 
-        return view('admin.inquiries.show', compact('inquiry', 'logs'));
+        $comments = $inquiry->comments()
+            ->with('user')
+            ->oldest()
+            ->get();
+
+        return view('admin.inquiries.show', compact('inquiry', 'logs', 'comments'));
     }
 
     public function myIndex()
@@ -130,20 +136,29 @@ class InquiryController extends Controller
             abort(403);
         }
 
-        return view('my.inquiries.show', compact('inquiry'));
+        $comments = $inquiry->comments()
+            ->with('user')
+            ->oldest()
+            ->get();
+
+        return view('my.inquiries.show', compact('inquiry', 'comments'));
     }
 
     public function update(Request $request, Inquiry $inquiry)
     {
+        if (Auth::user()->role !== 'admin') {
+            abort(403);
+        }
+
         $validated = $request->validate([
             'status' => ['required', 'in:未対応,対応中,回答済み,クローズ'],
-            'admin_reply' => ['nullable', 'string', 'max:1000'],
         ]);
 
         $beforeStatus = $inquiry->status;
-        $beforeAdminReply = $inquiry->admin_reply;
 
-        $inquiry->update($validated);
+        $inquiry->update([
+            'status' => $validated['status'],
+        ]);
 
         if ($beforeStatus !== $inquiry->status) {
             InquiryLog::create([
@@ -154,18 +169,6 @@ class InquiryController extends Controller
                 'before_value' => $beforeStatus,
                 'after_value' => $inquiry->status,
                 'message' => "ステータスを「{$beforeStatus}」から「{$inquiry->status}」に変更しました。",
-            ]);
-        }
-
-        if ($beforeAdminReply !== $inquiry->admin_reply) {
-            InquiryLog::create([
-                'inquiry_id' => $inquiry->id,
-                'user_id' => Auth::id(),
-                'action' => 'updated',
-                'field_name' => 'admin_reply',
-                'before_value' => $beforeAdminReply,
-                'after_value' => $inquiry->admin_reply,
-                'message' => '管理者返答を更新しました。',
             ]);
         }
 
@@ -188,4 +191,25 @@ class InquiryController extends Controller
             ->route('admin.inquiries.index')
             ->with('success', '問い合わせを削除しました。');
     }
+
+    public function storeComment(Request $request, Inquiry $inquiry)
+    {
+        $validated = $request->validate([
+            'body' => ['required', 'string', 'max:2000'],
+        ]);
+
+        if (Auth::user()->role !== 'admin' && $inquiry->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        InquiryComment::create([
+            'inquiry_id' => $inquiry->id,
+            'user_id' => Auth::id(),
+            'body' => $validated['body'],
+        ]);
+
+        return back()
+            ->with('success', 'コメントを投稿しました。');
+    }
+
 }
