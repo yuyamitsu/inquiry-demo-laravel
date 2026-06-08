@@ -24,8 +24,25 @@
             <dt>カテゴリ</dt>
             <dd>{{ $inquiry->category }}</dd>
 
+            <dt>ステータス</dt>
+            <dd>
+                @php
+                    $statusClass = match ($inquiry->status) {
+                        '未対応' => 'statusNew',
+                        '対応中' => 'statusProgress',
+                        '回答済み' => 'statusAnswered',
+                        'クローズ' => 'statusClosed',
+                        default => '',
+                    };
+                @endphp
+
+                <span class="status {{ $statusClass }}">
+                    {{ $inquiry->status }}
+                </span>
+            </dd>
+
             <dt>問い合わせ内容</dt>
-            <dd>{{ $inquiry->body }}</dd>
+            <dd>{!! nl2br(e($inquiry->body)) !!}</dd>
 
             <dt>受付日時</dt>
             <dd>{{ $inquiry->created_at->format('Y/m/d H:i') }}</dd>
@@ -33,7 +50,7 @@
     </section>
 
     <section class="card">
-        <h2>管理者対応</h2>
+        <h2>ステータス更新</h2>
 
         <form method="POST" action="{{ route('admin.inquiries.update', $inquiry) }}">
             @csrf
@@ -47,63 +64,99 @@
                     <option value="回答済み" @selected(old('status', $inquiry->status) === '回答済み')>回答済み</option>
                     <option value="クローズ" @selected(old('status', $inquiry->status) === 'クローズ')>クローズ</option>
                 </select>
+
                 @error('status')
                     <p class="errorText">{{ $message }}</p>
                 @enderror
             </div>
 
-            <div class="formGroup">
-                <label for="admin_reply">返答内容</label>
-                <textarea
-                    id="admin_reply"
-                    name="admin_reply"
-                    rows="6"
-                    placeholder="返答内容を入力してください"
-                >{{ old('admin_reply', $inquiry->admin_reply) }}</textarea>
-                @error('admin_reply')
-                    <p class="errorText">{{ $message }}</p>
-                @enderror
-            </div>
-
             <button type="submit" class="button">
-                保存する
+                ステータスを保存
             </button>
 
             <a href="{{ route('admin.inquiries.index') }}" class="button subButton">
                 一覧に戻る
             </a>
         </form>
-        <div class="historyArea">
-            <h2>変更履歴</h2>
+    </section>
 
-            @forelse ($logs as $log)
-                <div class="historyItem">
-                    <div class="historyMeta">
-                        <span>{{ $log->created_at->format('Y/m/d H:i') }}</span>
-                        <span>更新者：{{ $log->user?->name ?? '不明' }}</span>
-                    </div>
+    <section class="commentArea">
+        <h2>コメントスレッド</h2>
 
-                    <p class="historyMessage">
-                        {{ $log->message }}
-                    </p>
+        @forelse ($comments as $comment)
+            <div class="commentItem">
+                <div class="commentMeta">
+                    <span>{{ $comment->created_at->format('Y/m/d H:i') }}</span>
+                    <span>{{ $comment->user?->name ?? '不明' }}</span>
 
-                    @if ($log->field_name && ($log->before_value || $log->after_value))
-                        <div class="historyDetail">
-                            <span class="historyField">{{ $log->field_name }}</span>
-
-                            @if ($log->before_value !== null)
-                                <span class="historyBefore">変更前：{{ $log->before_value }}</span>
-                            @endif
-
-                            @if ($log->after_value !== null)
-                                <span class="historyAfter">変更後：{{ $log->after_value }}</span>
-                            @endif
-                        </div>
+                    @if ($comment->user?->role === 'admin')
+                        <span class="commentRole adminRole">管理者</span>
+                    @else
+                        <span class="commentRole userRole">一般ユーザー</span>
                     @endif
                 </div>
-            @empty
-                <p class="emptyText">変更履歴はありません。</p>
-            @endforelse
-        </div>
+
+                <p class="commentBody">
+                    {!! nl2br(e($comment->body)) !!}
+                </p>
+            </div>
+        @empty
+            <p class="emptyText">コメントはまだありません。</p>
+        @endforelse
+
+        <form method="POST" action="{{ route('inquiries.comments.store', $inquiry) }}" class="commentForm">
+            @csrf
+
+            <div class="formGroup">
+                <label for="commentBody">コメントを投稿</label>
+                <textarea
+                    id="commentBody"
+                    name="body"
+                    rows="4"
+                    placeholder="コメントを入力してください"
+                >{{ old('body') }}</textarea>
+
+                @error('body')
+                    <p class="errorText">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <button type="submit" class="button">
+                コメント投稿
+            </button>
+        </form>
+    </section>
+
+    <section class="historyArea">
+        <h2>変更履歴</h2>
+
+        @forelse ($logs as $log)
+            <div class="historyItem">
+                <div class="historyMeta">
+                    <span>{{ $log->created_at->format('Y/m/d H:i') }}</span>
+                    <span>更新者：{{ $log->user?->name ?? '不明' }}</span>
+                </div>
+
+                <p class="historyMessage">
+                    {{ $log->message }}
+                </p>
+
+                @if ($log->field_name && ($log->before_value || $log->after_value))
+                    <div class="historyDetail">
+                        <span class="historyField">{{ $log->field_name }}</span>
+
+                        @if ($log->before_value !== null)
+                            <span class="historyBefore">変更前：{{ $log->before_value }}</span>
+                        @endif
+
+                        @if ($log->after_value !== null)
+                            <span class="historyAfter">変更後：{{ $log->after_value }}</span>
+                        @endif
+                    </div>
+                @endif
+            </div>
+        @empty
+            <p class="emptyText">変更履歴はありません。</p>
+        @endforelse
     </section>
 @endsection

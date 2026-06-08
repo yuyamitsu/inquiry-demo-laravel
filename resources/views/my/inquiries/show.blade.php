@@ -14,7 +14,7 @@
         </a>
     </div>
 
-    <div class="card">
+    <section class="card">
         <h2>問い合わせ内容</h2>
 
         <dl class="detailList">
@@ -56,15 +56,52 @@
             <dt>問い合わせ内容</dt>
             <dd>{!! nl2br(e($inquiry->body)) !!}</dd>
         </dl>
-    </div>
+    </section>
 
-    <div class="card">
-        <h2>管理者からの返答</h2>
+    <section class="commentArea">
+        <h2>コメントスレッド</h2>
 
-        @if ($inquiry->admin_reply)
-            <p>{!! nl2br(e($inquiry->admin_reply)) !!}</p>
-        @else
-            <p class="emptyText">まだ管理者からの返答はありません。</p>
-        @endif
-    </div>
+        @forelse ($comments as $comment)
+            <div class="commentItem">
+                <div class="commentMeta">
+                    <span>{{ $comment->created_at->format('Y/m/d H:i') }}</span>
+                    <span>{{ $comment->user?->name ?? '不明' }}</span>
+
+                    @if ($comment->user?->role === 'admin')
+                        <span class="commentRole adminRole">管理者</span>
+                    @else
+                        <span class="commentRole userRole">一般ユーザー</span>
+                    @endif
+                </div>
+
+                <p class="commentBody">
+                    {!! nl2br(e($comment->body)) !!}
+                </p>
+            </div>
+        @empty
+            <p class="emptyText">コメントはまだありません。</p>
+        @endforelse
+
+        <form method="POST" action="{{ route('inquiries.comments.store', $inquiry) }}" class="commentForm">
+            @csrf
+
+            <div class="formGroup">
+                <label for="commentBody">コメントを投稿</label>
+                <textarea
+                    id="commentBody"
+                    name="body"
+                    rows="4"
+                    placeholder="コメントを入力してください"
+                >{{ old('body') }}</textarea>
+
+                @error('body')
+                    <p class="errorText">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <button type="submit" class="button">
+                コメント投稿
+            </button>
+        </form>
+    </section>
 @endsection

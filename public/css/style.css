@@ -454,3 +454,64 @@ textarea {
 .logoutForm {
     margin: 0;
 }
+
+.commentArea {
+    margin-top: 32px;
+    padding: 24px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+}
+
+.commentArea h2 {
+    margin-bottom: 16px;
+    font-size: 20px;
+}
+
+.commentItem {
+    padding: 16px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.commentItem:last-of-type {
+    border-bottom: none;
+}
+
+.commentMeta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    margin-bottom: 8px;
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.commentRole {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.adminRole {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+.userRole {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.commentBody {
+    margin: 0;
+    white-space: normal;
+    line-height: 1.7;
+}
+
+.commentForm {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #e5e7eb;
+}
