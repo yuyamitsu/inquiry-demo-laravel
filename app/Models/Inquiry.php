@@ -15,6 +15,9 @@ class Inquiry extends Model
         'body',
         'status',
         'admin_reply',
+        'assignee_id',
+        'priority',
+        'due_date',
     ];
     
     public function logs()
@@ -30,6 +33,11 @@ class Inquiry extends Model
     public function comments()
     {
         return $this->hasMany(InquiryComment::class);
+    }
+
+    public function assignee()
+    {
+        return $this->belongsTo(User::class, 'assignee_id');
     }
     
 }
