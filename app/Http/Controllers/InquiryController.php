@@ -48,7 +48,7 @@ class InquiryController extends Controller
             ->route('my.inquiries.show', $inquiry)
             ->with('success', 'お問い合わせを登録しました。');
     }
-    
+
     public function index(Request $request)
     {
         if (Auth::user()->role !== 'admin') {
@@ -135,6 +135,7 @@ class InquiryController extends Controller
             'closedCount'
         ));
     }
+
     public function show(Inquiry $inquiry)
     {
         if (Auth::user()->role !== 'admin') {
@@ -165,7 +166,8 @@ class InquiryController extends Controller
 
     public function myIndex()
     {
-        $inquiries = Inquiry::where('user_id', Auth::id())
+        $inquiries = Inquiry::with('assignee')
+            ->where('user_id', Auth::id())
             ->orderByDesc('created_at')
             ->orderByDesc('id')
             ->paginate(10);
