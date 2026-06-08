@@ -34,6 +34,7 @@
             <span class="summaryLabel">回答済み</span>
             <strong>{{ $answeredCount }}</strong>
         </div>
+
         <div class="summaryCard">
             <span class="summaryLabel">クローズ</span>
             <strong>{{ $closedCount }}</strong>
@@ -41,34 +42,79 @@
     </div>
 
     <form method="GET" action="{{ route('admin.inquiries.index') }}" class="searchBox">
-        <input
-            type="text"
-            name="keyword"
-            value="{{ $keyword }}"
-            placeholder="件名・名前・メール・本文で検索"
-        >
+        <div class="searchItem searchKeyword">
+            <label for="keyword">キーワード</label>
+            <input
+                type="text"
+                id="keyword"
+                name="keyword"
+                value="{{ $keyword }}"
+                placeholder="件名・名前・メール・本文で検索"
+            >
+        </div>
 
-        <select name="status">
-            <option value="">すべてのステータス</option>
-            <option value="未対応" @selected($status === '未対応')>未対応</option>
-            <option value="対応中" @selected($status === '対応中')>対応中</option>
-            <option value="回答済み" @selected($status === '回答済み')>回答済み</option>
-            <option value="クローズ" @selected($status === 'クローズ')>クローズ</option>
-        </select>
+        <div class="searchItem">
+            <label for="status">ステータス</label>
+            <select id="status" name="status">
+                <option value="">すべて</option>
+                <option value="未対応" @selected($status === '未対応')>未対応</option>
+                <option value="対応中" @selected($status === '対応中')>対応中</option>
+                <option value="回答済み" @selected($status === '回答済み')>回答済み</option>
+                <option value="クローズ" @selected($status === 'クローズ')>クローズ</option>
+            </select>
+        </div>
 
-        <select name="category">
-            <option value="">すべてのカテゴリ</option>
-            <option value="質問" @selected($category === '質問')>質問</option>
-            <option value="相談" @selected($category === '相談')>相談</option>
-            <option value="不具合" @selected($category === '不具合')>不具合</option>
-            <option value="その他" @selected($category === 'その他')>その他</option>
-        </select>
+        <div class="searchItem">
+            <label for="category">カテゴリ</label>
+            <select id="category" name="category">
+                <option value="">すべて</option>
+                <option value="質問" @selected($category === '質問')>質問</option>
+                <option value="相談" @selected($category === '相談')>相談</option>
+                <option value="不具合" @selected($category === '不具合')>不具合</option>
+                <option value="その他" @selected($category === 'その他')>その他</option>
+            </select>
+        </div>
 
-        <button type="submit" class="button">検索</button>
+        <div class="searchItem">
+            <label for="assignee_id">担当者</label>
+            <select id="assignee_id" name="assignee_id">
+                <option value="">すべて</option>
+                @foreach ($assignees as $assignee)
+                    <option value="{{ $assignee->id }}" @selected((string) $assigneeId === (string) $assignee->id)>
+                        {{ $assignee->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
 
-        <a href="{{ route('admin.inquiries.index') }}" class="button subButton">
-            リセット
-        </a>
+        <div class="searchItem">
+            <label for="priority">優先度</label>
+            <select id="priority" name="priority">
+                <option value="">すべて</option>
+                <option value="低" @selected($priority === '低')>低</option>
+                <option value="中" @selected($priority === '中')>中</option>
+                <option value="高" @selected($priority === '高')>高</option>
+                <option value="緊急" @selected($priority === '緊急')>緊急</option>
+            </select>
+        </div>
+
+        <div class="searchItem">
+            <label for="due_status">期限</label>
+            <select id="due_status" name="due_status">
+                <option value="">すべて</option>
+                <option value="overdue" @selected($dueStatus === 'overdue')>期限切れ</option>
+                <option value="today" @selected($dueStatus === 'today')>今日まで</option>
+                <option value="unset" @selected($dueStatus === 'unset')>期限未設定</option>
+            </select>
+        </div>
+
+        <div class="searchActions">
+            <button type="submit" class="button">検索</button>
+
+            <a href="{{ route('admin.inquiries.index') }}" class="button subButton">
+                リセット
+            </a>
+        </div>
     </form>
 
     <p class="resultText">
@@ -80,22 +126,32 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>詳細</th>
                     <th>件名</th>
+                    <th>ステータス</th>
+                    <th>担当者</th>
+                    <th>優先度</th>
+                    <th>対応期限</th>
                     <th>名前</th>
                     <th>カテゴリ</th>
-                    <th>ステータス</th>
                     <th>受付日時</th>
-                    <th>詳細</th>
                     <th>削除</th>
                 </tr>
             </thead>
+
             <tbody>
                 @forelse ($inquiries as $inquiry)
                     <tr>
                         <td>{{ $inquiry->id }}</td>
+
+                        <td>
+                            <a href="{{ route('admin.inquiries.show', $inquiry) }}" class="button smallButton">
+                                詳細
+                            </a>
+                        </td>
+
                         <td>{{ $inquiry->title }}</td>
-                        <td>{{ $inquiry->name }}</td>
-                        <td>{{ $inquiry->category }}</td>
+
                         <td>
                             @php
                                 $statusClass = match ($inquiry->status) {
@@ -111,12 +167,25 @@
                                 {{ $inquiry->status }}
                             </span>
                         </td>
-                        <td>{{ $inquiry->created_at->format('Y/m/d H:i') }}</td>
+
+                        <td>{{ $inquiry->assignee?->name ?? '未設定' }}</td>
+
+                        <td>{{ $inquiry->priority ?? '未設定' }}</td>
+
                         <td>
-                            <a href="{{ route('admin.inquiries.show', $inquiry) }}">
-                                詳細
-                            </a>
+                            @if ($inquiry->due_date)
+                                {{ \Carbon\Carbon::parse($inquiry->due_date)->format('Y/m/d') }}
+                            @else
+                                未設定
+                            @endif
                         </td>
+
+                        <td>{{ $inquiry->name }}</td>
+
+                        <td>{{ $inquiry->category }}</td>
+
+                        <td>{{ $inquiry->created_at->timezone('Asia/Tokyo')->format('Y/m/d H:i') }}</td>
+
                         <td>
                             <form
                                 method="POST"
@@ -126,7 +195,7 @@
                                 @csrf
                                 @method('DELETE')
 
-                                <button type="submit" class="button deleteButton">
+                                <button type="submit" class="button deleteButton smallButton">
                                     削除
                                 </button>
                             </form>
@@ -134,7 +203,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="8">
+                        <td colspan="11">
                             条件に一致する問い合わせはありません。
                         </td>
                     </tr>
@@ -142,6 +211,7 @@
             </tbody>
         </table>
     </div>
+
     <div class="paginationArea">
         {{ $inquiries->links() }}
     </div>

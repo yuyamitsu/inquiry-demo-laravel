@@ -48,17 +48,21 @@ class InquiryController extends Controller
             ->route('my.inquiries.show', $inquiry)
             ->with('success', 'お問い合わせを登録しました。');
     }
+    
     public function index(Request $request)
     {
         if (Auth::user()->role !== 'admin') {
             abort(403);
         }
-        
+
         $keyword = $request->input('keyword');
         $status = $request->input('status');
         $category = $request->input('category');
+        $assigneeId = $request->input('assignee_id');
+        $priority = $request->input('priority');
+        $dueStatus = $request->input('due_status');
 
-        $query = Inquiry::query();
+        $query = Inquiry::with('assignee');
 
         if ($keyword) {
             $query->where(function ($q) use ($keyword) {
@@ -77,11 +81,37 @@ class InquiryController extends Controller
             $query->where('category', $category);
         }
 
+        if ($assigneeId) {
+            $query->where('assignee_id', $assigneeId);
+        }
+
+        if ($priority) {
+            $query->where('priority', $priority);
+        }
+
+        if ($dueStatus === 'overdue') {
+            $query->whereNotNull('due_date')
+                ->whereDate('due_date', '<', now()->toDateString())
+                ->where('status', '!=', 'クローズ');
+        }
+
+        if ($dueStatus === 'today') {
+            $query->whereDate('due_date', now()->toDateString());
+        }
+
+        if ($dueStatus === 'unset') {
+            $query->whereNull('due_date');
+        }
+
         $inquiries = $query
             ->orderByDesc('created_at')
             ->orderByDesc('id')
             ->paginate(10)
             ->withQueryString();
+
+        $assignees = User::where('role', 'admin')
+            ->orderBy('name')
+            ->get();
 
         $totalCount = Inquiry::count();
         $newCount = Inquiry::where('status', '未対応')->count();
@@ -94,6 +124,10 @@ class InquiryController extends Controller
             'keyword',
             'status',
             'category',
+            'assigneeId',
+            'priority',
+            'dueStatus',
+            'assignees',
             'totalCount',
             'newCount',
             'progressCount',
@@ -101,7 +135,6 @@ class InquiryController extends Controller
             'closedCount'
         ));
     }
-
     public function show(Inquiry $inquiry)
     {
         if (Auth::user()->role !== 'admin') {
@@ -235,6 +268,10 @@ class InquiryController extends Controller
 
     public function destroy(Inquiry $inquiry)
     {
+        if (Auth::user()->role !== 'admin') {
+            abort(403);
+        }
+
         Log::warning('問い合わせが削除されました。', [
             'inquiry_id' => $inquiry->id,
             'title' => $inquiry->title,
