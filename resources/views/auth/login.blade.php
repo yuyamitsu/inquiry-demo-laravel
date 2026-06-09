@@ -46,17 +46,6 @@
                     ログイン
                 </button>
             </form>
-
-            <div class="loginDemoInfo">
-                <p>Demo用管理者ログイン情報</p>
-                <p>メールアドレス：admin@example.com</p>
-                <p>パスワード：password</p>
-            </div>
-            <div class="loginDemoInfo">
-                <p>Demo用一般ユーザーログイン情報</p>
-                <p>メールアドレス：user@example.com</p>
-                <p>パスワード：password</p>
-            </div>
         </div>
     </div>
 @endsection

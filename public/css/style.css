@@ -513,18 +513,6 @@ textarea {
     color: #6b7280;
 }
 
-.loginDemoInfo {
-    margin-top: 24px;
-    padding: 16px;
-    background: #f9fafb;
-    border-radius: 8px;
-    font-size: 14px;
-}
-
-.loginDemoInfo p {
-    margin: 4px 0;
-}
-
 /* Tablet */
 @media (max-width: 900px) {
     .summaryArea {
