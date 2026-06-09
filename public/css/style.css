@@ -303,6 +303,63 @@ textarea {
     color: #374151;
 }
 
+.priorityBadge,
+.dueBadge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.priorityLow {
+    background-color: #e5e7eb;
+    color: #374151;
+}
+
+.priorityMiddle {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+.priorityHigh {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.priorityUrgent {
+    background-color: #fee2e2;
+    color: #991b1b;
+    font-weight: 700;
+}
+
+.priorityUnset {
+    background-color: #f3f4f6;
+    color: #6b7280;
+}
+
+.dueNormal {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.dueToday {
+    background-color: #fef3c7;
+    color: #92400e;
+    font-weight: 700;
+}
+
+.dueOver {
+    background-color: #fee2e2;
+    color: #991b1b;
+    font-weight: 700;
+}
+
+.dueUnset {
+    background-color: #f3f4f6;
+    color: #6b7280;
+}
+
 /* Pagination */
 .paginationArea {
     margin-top: 24px;

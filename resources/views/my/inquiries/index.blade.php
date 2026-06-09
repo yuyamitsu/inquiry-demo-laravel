@@ -61,14 +61,47 @@
 
                         <td>{{ $inquiry->assignee?->name ?? '未設定' }}</td>
 
-                        <td>{{ $inquiry->priority ?? '未設定' }}</td>
-
                         <td>
-                            @if ($inquiry->due_date)
-                                {{ \Carbon\Carbon::parse($inquiry->due_date)->format('Y/m/d') }}
-                            @else
-                                未設定
-                            @endif
+                            @php
+                                $priorityClass = match ($inquiry->priority) {
+                                    '低' => 'priorityLow',
+                                    '中' => 'priorityMiddle',
+                                    '高' => 'priorityHigh',
+                                    '緊急' => 'priorityUrgent',
+                                    default => 'priorityUnset',
+                                };
+                            @endphp
+
+                            <span class="priorityBadge {{ $priorityClass }}">
+                                {{ $inquiry->priority ?? '未設定' }}
+                            </span>
+                        </td>
+                        <td>
+                            @php
+                                $dueDate = $inquiry->due_date
+                                    ? \Carbon\Carbon::parse($inquiry->due_date)
+                                    : null;
+
+                                $dueClass = 'dueUnset';
+
+                                if ($dueDate) {
+                                    if ($dueDate->isPast() && ! $dueDate->isToday() && $inquiry->status !== 'クローズ') {
+                                        $dueClass = 'dueOver';
+                                    } elseif ($dueDate->isToday() && $inquiry->status !== 'クローズ') {
+                                        $dueClass = 'dueToday';
+                                    } else {
+                                        $dueClass = 'dueNormal';
+                                    }
+                                }
+                            @endphp
+
+                            <span class="dueBadge {{ $dueClass }}">
+                                @if ($dueDate)
+                                    {{ $dueDate->format('Y/m/d') }}
+                                @else
+                                    未設定
+                                @endif
+                            </span>
                         </td>
 
                         <td>{{ $inquiry->created_at->timezone('Asia/Tokyo')->format('Y/m/d H:i') }}</td>
