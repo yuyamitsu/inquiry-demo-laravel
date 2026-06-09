@@ -45,15 +45,55 @@
             <dd>{{ $inquiry->assignee?->name ?? '未設定' }}</dd>
 
             <dt>優先度</dt>
-            <dd>{{ $inquiry->priority ?? '未設定' }}</dd>
+            <dd>
+                @php
+                    $priorityClass = match ($inquiry->priority) {
+                        '低' => 'priorityLow',
+                        '中' => 'priorityMiddle',
+                        '高' => 'priorityHigh',
+                        '緊急' => 'priorityUrgent',
+                        default => 'priorityUnset',
+                    };
+                @endphp
+
+                <span class="priorityBadge {{ $priorityClass }}">
+                    {{ $inquiry->priority ?? '未設定' }}
+                </span>
+            </dd>
 
             <dt>対応期限</dt>
             <dd>
-                @if ($inquiry->due_date)
-                    {{ \Carbon\Carbon::parse($inquiry->due_date)->format('Y/m/d') }}
-                @else
-                    未設定
-                @endif
+                @php
+                    $dueDate = $inquiry->due_date
+                        ? \Carbon\Carbon::parse($inquiry->due_date)
+                        : null;
+
+                    $dueClass = 'dueUnset';
+
+                    if ($dueDate) {
+                        if ($dueDate->isPast() && ! $dueDate->isToday() && $inquiry->status !== 'クローズ') {
+                            $dueClass = 'dueOver';
+                        } elseif ($dueDate->isToday() && $inquiry->status !== 'クローズ') {
+                            $dueClass = 'dueToday';
+                        } else {
+                            $dueClass = 'dueNormal';
+                        }
+                    }
+                @endphp
+
+                <span class="dueBadge {{ $dueClass }}">
+                    @if ($dueDate)
+                        {{ $dueDate->format('Y/m/d') }}
+
+                        @if ($dueClass === 'dueOver')
+                            （期限切れ）
+                        @elseif ($dueClass === 'dueToday')
+                            （今日まで）
+                        @endif
+                    @else
+                        未設定
+                    @endif
+                </span>
             </dd>
 
             <dt>問い合わせ内容</dt>
