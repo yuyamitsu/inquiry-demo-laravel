@@ -81,7 +81,9 @@ class InquiryController extends Controller
             $query->where('category', $category);
         }
 
-        if ($assigneeId) {
+        if ($assigneeId === 'unassigned') {
+            $query->whereNull('assignee_id');
+        } elseif ($assigneeId) {
             $query->where('assignee_id', $assigneeId);
         }
 

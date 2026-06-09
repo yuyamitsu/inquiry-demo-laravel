@@ -79,6 +79,10 @@
             <label for="assignee_id">担当者</label>
             <select id="assignee_id" name="assignee_id">
                 <option value="">すべて</option>
+                <option value="unassigned" @selected($assigneeId === 'unassigned')>
+                    未設定
+                </option>
+
                 @foreach ($assignees as $assignee)
                     <option value="{{ $assignee->id }}" @selected((string) $assigneeId === (string) $assignee->id)>
                         {{ $assignee->name }}
