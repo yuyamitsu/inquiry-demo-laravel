@@ -666,3 +666,27 @@ textarea {
 .tableLink:hover {
     text-decoration: underline;
 }
+
+.passwordInputWrap {
+    display: flex;
+    gap: 8px;
+}
+
+.passwordInputWrap input {
+    flex: 1;
+}
+
+.passwordToggleButton {
+    flex: 0 0 auto;
+    padding: 10px 14px;
+    border: 1px solid #ccd3dc;
+    border-radius: 6px;
+    background-color: #f9fafb;
+    color: #374151;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.passwordToggleButton:hover {
+    background-color: #f3f4f6;
+}

@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'ログイン')
+@section('title', 'ユーザー登録')
 
 @section('content')
     <div class="loginWrapper">
         <div class="loginCard">
-            <h1>ログイン</h1>
-            <p>問い合わせ管理画面にアクセスするにはログインしてください。</p>
+            <h1>ユーザー登録</h1>
+            <p>問い合わせを登録・確認するためのアカウントを作成します。</p>
 
             @if ($errors->any())
                 <div class="errorBox">
@@ -18,8 +18,19 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('login.store') }}" class="formArea">
+            <form method="POST" action="{{ route('register.store') }}" class="formArea">
                 @csrf
+
+                <div class="formGroup">
+                    <label for="name">お名前</label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value="{{ old('name') }}"
+                        required
+                    >
+                </div>
 
                 <div class="formGroup">
                     <label for="email">メールアドレス</label>
@@ -34,7 +45,6 @@
 
                 <div class="formGroup">
                     <label for="password">パスワード</label>
-
                     <div class="passwordInputWrap">
                         <input
                             type="password"
@@ -42,7 +52,6 @@
                             name="password"
                             required
                         >
-
                         <button
                             type="button"
                             class="passwordToggleButton"
@@ -53,19 +62,37 @@
                     </div>
                 </div>
 
+                <div class="formGroup">
+                    <label for="password_confirmation">パスワード確認</label>
+                    <div class="passwordInputWrap">
+                        <input
+                            type="password"
+                            id="password_confirmation"
+                            name="password_confirmation"
+                            required
+                        >
+                        <button
+                            type="button"
+                            class="passwordToggleButton"
+                            data-target="password_confirmation"
+                        >
+                            表示
+                        </button>
+                    </div>
+                </div>
+
                 <button type="submit" class="button">
-                    ログイン
+                    登録する
                 </button>
             </form>
 
             <div class="linkArea">
-                <a href="{{ route('register') }}">
-                    アカウントをお持ちでない方はこちら
+                <a href="{{ route('login') }}">
+                    すでにアカウントをお持ちの方はこちら
                 </a>
             </div>
         </div>
     </div>
-
     <script>
         document.querySelectorAll('.passwordToggleButton').forEach((button) => {
             button.addEventListener('click', () => {
