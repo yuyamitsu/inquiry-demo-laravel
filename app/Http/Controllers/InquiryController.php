@@ -35,7 +35,6 @@ class InquiryController extends Controller
             'category' => $validated['category'],
             'body' => $validated['body'],
             'status' => '未対応',
-            'admin_reply' => null,
         ]);
 
         if (Auth::user()->role === 'admin') {

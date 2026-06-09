@@ -14,7 +14,6 @@ class Inquiry extends Model
         'category',
         'body',
         'status',
-        'admin_reply',
         'assignee_id',
         'priority',
         'due_date',
@@ -39,5 +38,5 @@ class Inquiry extends Model
     {
         return $this->belongsTo(User::class, 'assignee_id');
     }
-    
+
 }

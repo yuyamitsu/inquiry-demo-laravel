@@ -193,7 +193,6 @@ class InquirySeeder extends Seeder
                 'assignee_id' => $inquiryData['assignee_id'],
                 'priority' => $inquiryData['priority'],
                 'due_date' => $inquiryData['due_date'],
-                'admin_reply' => null,
             ]);
 
             foreach ($comments as $comment) {
