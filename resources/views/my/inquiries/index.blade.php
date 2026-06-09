@@ -23,7 +23,6 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>詳細</th>
                     <th>件名</th>
                     <th>ステータス</th>
                     <th>担当者</th>
@@ -39,12 +38,10 @@
                         <td>{{ $inquiry->id }}</td>
 
                         <td>
-                            <a href="{{ route('my.inquiries.show', $inquiry) }}" class="button smallButton">
-                                詳細
+                            <a href="{{ route('my.inquiries.show', $inquiry) }}" class="tableLink">
+                                {{ $inquiry->title }}
                             </a>
                         </td>
-
-                        <td>{{ $inquiry->title }}</td>
 
                         <td>
                             @php
@@ -78,7 +75,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="8">
+                        <td colspan="7">
                             登録した問い合わせはありません。
                         </td>
                     </tr>

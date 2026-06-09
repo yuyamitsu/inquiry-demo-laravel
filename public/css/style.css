@@ -589,3 +589,18 @@ textarea {
         font-size: 24px;
     }
 }
+
+.tableLink {
+    display: inline-block;
+    max-width: 260px;
+    color: #2563eb;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tableLink:hover {
+    text-decoration: underline;
+}
