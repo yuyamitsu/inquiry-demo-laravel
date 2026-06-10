@@ -13,7 +13,7 @@ class UserController extends Controller
         if ($request->user()->role !== 'admin') {
             abort(403);
         }
-        
+
         $keyword = $request->input('keyword');
         $role = $request->input('role');
 
@@ -46,4 +46,30 @@ class UserController extends Controller
             'role'
         ));
     }
+
+    public function show(Request $request, User $user)
+    {
+        if ($request->user()->role !== 'admin') {
+            abort(403);
+        }
+
+        $createdInquiries = $user->inquiries()
+            ->with('assignee')
+            ->orderByDesc('created_at')
+            ->orderByDesc('id')
+            ->paginate(5, ['*'], 'created_page');
+
+        $assignedInquiries = $user->assignedInquiries()
+            ->with('user')
+            ->orderByDesc('created_at')
+            ->orderByDesc('id')
+            ->paginate(5, ['*'], 'assigned_page');
+
+        return view('admin.users.show', compact(
+            'user',
+            'createdInquiries',
+            'assignedInquiries'
+        ));
+    }
+
 }

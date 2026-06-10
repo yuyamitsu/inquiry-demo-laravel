@@ -62,6 +62,9 @@ Route::middleware(['auth', 'admin'])
         Route::get('/users', [AdminUserController::class, 'index'])
             ->name('users.index');
 
+        Route::get('/users/{user}', [AdminUserController::class, 'show'])
+            ->name('users.show');
+
         Route::get('/inquiries/{inquiry}', [InquiryController::class, 'show'])
             ->name('inquiries.show');
 
