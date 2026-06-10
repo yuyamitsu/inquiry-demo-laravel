@@ -32,6 +32,12 @@
                         {{ auth()->user()->name }} さん
                     </span>
 
+                    @if (auth()->user()->role === 'admin')
+                        <a href="{{ route('admin.users.index') }}" class="button subButton">
+                            ユーザー管理
+                        </a>
+                    @endif
+
                     <a href="{{ route('my.password.edit') }}" class="button subButton">
                         パスワード変更
                     </a>
@@ -44,6 +50,7 @@
                     </form>
                 </div>
             @endauth
+
         </div>
     </header>
 

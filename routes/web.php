@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\PasswordController;
@@ -58,6 +59,9 @@ Route::middleware(['auth', 'admin'])
         Route::get('/inquiries', [InquiryController::class, 'index'])
             ->name('inquiries.index');
 
+        Route::get('/users', [AdminUserController::class, 'index'])
+            ->name('users.index');
+
         Route::get('/inquiries/{inquiry}', [InquiryController::class, 'show'])
             ->name('inquiries.show');
 
@@ -91,4 +95,3 @@ Route::middleware('auth')
         Route::put('/password', [PasswordController::class, 'update'])
             ->name('password.update');
     });
-    

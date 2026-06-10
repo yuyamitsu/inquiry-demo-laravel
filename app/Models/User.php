@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
+use App\Models\Inquiry;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -34,5 +35,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(InquiryComment::class);
     }
-    
+
+    public function inquiries()
+    {
+        return $this->hasMany(Inquiry::class);
+    }
+
+    public function assignedInquiries()
+    {
+        return $this->hasMany(Inquiry::class, 'assignee_id');
+    }
+
 }

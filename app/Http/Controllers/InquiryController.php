@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
 
 class InquiryController extends Controller
 {
@@ -110,7 +111,7 @@ class InquiryController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        $assignees = User::where('role', 'admin')
+        $assignees = User::whereIn('role', ['admin', 'staff'])
             ->orderBy('name')
             ->get();
 
@@ -153,7 +154,7 @@ class InquiryController extends Controller
             ->oldest()
             ->get();
 
-        $assignees = User::where('role', 'admin')
+        $assignees = User::whereIn('role', ['admin', 'staff'])
             ->orderBy('name')
             ->get();
 
@@ -198,7 +199,12 @@ class InquiryController extends Controller
 
         $validated = $request->validate([
             'status' => ['required', 'in:未対応,対応中,回答済み,クローズ'],
-            'assignee_id' => ['nullable', 'exists:users,id,role,admin'],
+            'assignee_id' => [
+                'nullable',
+                Rule::exists('users', 'id')->where(function ($query) {
+                    $query->whereIn('role', ['admin', 'staff']);
+                }),
+            ],
             'priority' => ['nullable', 'in:低,中,高,緊急'],
             'due_date' => ['nullable', 'date'],
         ]);
