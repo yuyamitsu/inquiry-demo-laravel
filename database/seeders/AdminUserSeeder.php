@@ -10,13 +10,34 @@ class AdminUserSeeder extends Seeder
 {
     public function run(): void
     {
-        User::updateOrCreate(
-            ['email' => 'admin@example.com'],
+        $admins = [
             [
                 'name' => '管理者',
-                'password' => Hash::make('password'),
-                'role' => 'admin',
-            ]
-        );
+                'email' => 'admin@example.com',
+            ],
+            [
+                'name' => '佐藤 担当者',
+                'email' => 'sato@example.com',
+            ],
+            [
+                'name' => '鈴木 担当者',
+                'email' => 'suzuki@example.com',
+            ],
+            [
+                'name' => '高橋 担当者',
+                'email' => 'takahashi@example.com',
+            ],
+        ];
+
+        foreach ($admins as $admin) {
+            User::updateOrCreate(
+                ['email' => $admin['email']],
+                [
+                    'name' => $admin['name'],
+                    'password' => Hash::make('password'),
+                    'role' => 'admin',
+                ]
+            );
+        }
     }
 }
