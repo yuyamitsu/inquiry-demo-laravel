@@ -15,30 +15,35 @@
     </div>
 
     <div class="summaryArea">
-        <div class="summaryCard">
+        <a href="{{ route('admin.inquiries.index') }}" class="summaryCard summaryAll">
             <span class="summaryLabel">全件</span>
             <strong>{{ $totalCount }}</strong>
-        </div>
+            <span class="summaryNote">登録済み</span>
+        </a>
 
-        <div class="summaryCard">
+        <a href="{{ route('admin.inquiries.index', ['status' => '未対応']) }}" class="summaryCard summaryNew">
             <span class="summaryLabel">未対応</span>
             <strong>{{ $newCount }}</strong>
-        </div>
+            <span class="summaryNote">対応が必要</span>
+        </a>
 
-        <div class="summaryCard">
+        <a href="{{ route('admin.inquiries.index', ['status' => '対応中']) }}" class="summaryCard summaryProgress">
             <span class="summaryLabel">対応中</span>
             <strong>{{ $progressCount }}</strong>
-        </div>
+            <span class="summaryNote">処理中</span>
+        </a>
 
-        <div class="summaryCard">
+        <a href="{{ route('admin.inquiries.index', ['status' => '回答済み']) }}" class="summaryCard summaryAnswered">
             <span class="summaryLabel">回答済み</span>
             <strong>{{ $answeredCount }}</strong>
-        </div>
+            <span class="summaryNote">回答完了</span>
+        </a>
 
-        <div class="summaryCard">
+        <a href="{{ route('admin.inquiries.index', ['status' => 'クローズ']) }}" class="summaryCard summaryClosed">
             <span class="summaryLabel">クローズ</span>
             <strong>{{ $closedCount }}</strong>
-        </div>
+            <span class="summaryNote">完了済み</span>
+        </a>
     </div>
 
     <form method="GET" action="{{ route('admin.inquiries.index') }}" class="searchBox">
