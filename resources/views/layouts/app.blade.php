@@ -27,12 +27,22 @@
             @endauth
 
             @auth
-                <form method="POST" action="{{ route('logout') }}" class="logoutForm">
-                    @csrf
-                    <button type="submit" class="button subButton">
-                        ログアウト
-                    </button>
-                </form>
+                <div class="headerActions">
+                    <span class="loginUserName">
+                        {{ auth()->user()->name }} さん
+                    </span>
+
+                    <a href="{{ route('my.password.edit') }}" class="button subButton">
+                        パスワード変更
+                    </a>
+
+                    <form method="POST" action="{{ route('logout') }}" class="logoutForm">
+                        @csrf
+                        <button type="submit" class="button subButton">
+                            ログアウト
+                        </button>
+                    </form>
+                </div>
             @endauth
         </div>
     </header>

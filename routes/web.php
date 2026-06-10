@@ -2,9 +2,38 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\InquiryController;
+use App\Http\Controllers\PasswordController;
 use Illuminate\Support\Facades\Route;
 
+/*
+|--------------------------------------------------------------------------
+| 認証不要ルート
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/login', [AuthController::class, 'showLoginForm'])
+    ->name('login');
+
+Route::post('/login', [AuthController::class, 'login'])
+    ->name('login.store');
+
+Route::get('/register', [AuthController::class, 'showRegisterForm'])
+    ->name('register');
+
+Route::post('/register', [AuthController::class, 'register'])
+    ->name('register.store');
+
+
+/*
+|--------------------------------------------------------------------------
+| ログイン済み共通ルート
+|--------------------------------------------------------------------------
+*/
+
 Route::middleware('auth')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout'])
+        ->name('logout');
+
     Route::get('/', [InquiryController::class, 'create'])
         ->name('inquiries.create');
 
@@ -15,20 +44,12 @@ Route::middleware('auth')->group(function () {
         ->name('inquiries.comments.store');
 });
 
-Route::get('/login', [AuthController::class, 'showLoginForm'])
-    ->name('login');
 
-Route::post('/login', [AuthController::class, 'login'])
-    ->name('login.store');
-
-Route::post('/logout', [AuthController::class, 'logout'])
-    ->name('logout');
-
-Route::get('/register', [AuthController::class, 'showRegisterForm'])
-    ->name('register');
-
-Route::post('/register', [AuthController::class, 'register'])
-    ->name('register.store');
+/*
+|--------------------------------------------------------------------------
+| 管理者ルート
+|--------------------------------------------------------------------------
+*/
 
 Route::middleware(['auth', 'admin'])
     ->prefix('admin')
@@ -47,6 +68,13 @@ Route::middleware(['auth', 'admin'])
             ->name('inquiries.destroy');
     });
 
+
+/*
+|--------------------------------------------------------------------------
+| マイページルート
+|--------------------------------------------------------------------------
+*/
+
 Route::middleware('auth')
     ->prefix('my')
     ->name('my.')
@@ -56,4 +84,11 @@ Route::middleware('auth')
 
         Route::get('/inquiries/{inquiry}', [InquiryController::class, 'myShow'])
             ->name('inquiries.show');
+
+        Route::get('/password', [PasswordController::class, 'edit'])
+            ->name('password.edit');
+
+        Route::put('/password', [PasswordController::class, 'update'])
+            ->name('password.update');
     });
+    
