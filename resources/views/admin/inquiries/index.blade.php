@@ -84,8 +84,13 @@
             <label for="assignee_id">担当者</label>
             <select id="assignee_id" name="assignee_id">
                 <option value="">すべて</option>
+
                 <option value="unassigned" @selected($assigneeId === 'unassigned')>
                     未設定
+                </option>
+
+                <option value="me" @selected($assigneeId === 'me')>
+                    自分の担当
                 </option>
 
                 @foreach ($assignees as $assignee)
@@ -226,18 +231,22 @@
                         <td>{{ $inquiry->created_at->timezone('Asia/Tokyo')->format('Y/m/d H:i') }}</td>
 
                         <td>
-                            <form
-                                method="POST"
-                                action="{{ route('admin.inquiries.destroy', $inquiry) }}"
-                                onsubmit="return confirm('この問い合わせを削除しますか？');"
-                            >
-                                @csrf
-                                @method('DELETE')
+                            @if (auth()->user()->role === 'admin')
+                                <form
+                                    method="POST"
+                                    action="{{ route('admin.inquiries.destroy', $inquiry) }}"
+                                    onsubmit="return confirm('この問い合わせを削除しますか？');"
+                                >
+                                    @csrf
+                                    @method('DELETE')
 
-                                <button type="submit" class="button deleteButton smallButton">
-                                    削除
-                                </button>
-                            </form>
+                                    <button type="submit" class="button deleteButton smallButton">
+                                        削除
+                                    </button>
+                                </form>
+                            @else
+                                -
+                            @endif
                         </td>
                     </tr>
                 @empty

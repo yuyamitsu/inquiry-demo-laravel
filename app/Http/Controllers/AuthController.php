@@ -24,7 +24,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            if (Auth::user()->role === 'admin') {
+            if (in_array(Auth::user()->role, ['admin', 'staff'], true)) {
                 return redirect()
                     ->route('admin.inquiries.index')
                     ->with('success', 'ログインしました。');
@@ -88,5 +88,4 @@ class AuthController extends Controller
             ->route('my.inquiries.index')
             ->with('success', 'ユーザー登録が完了しました。');
     }
-
 }

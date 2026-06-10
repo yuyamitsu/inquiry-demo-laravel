@@ -11,7 +11,7 @@
     <header class="siteHeader">
         <div class="siteHeaderInner">
             @auth
-                @if (auth()->user()->role === 'admin')
+                @if (in_array(auth()->user()->role, ['admin', 'staff'], true))
                     <a href="{{ route('admin.inquiries.index') }}" class="siteTitle">
                         問い合わせ管理Demo
                     </a>
@@ -50,10 +50,8 @@
                     </form>
                 </div>
             @endauth
-
         </div>
     </header>
-
     <main class="container">
         @if (session('success'))
             <div class="successMessage">

@@ -38,7 +38,7 @@ class InquiryController extends Controller
             'status' => '未対応',
         ]);
 
-        if (Auth::user()->role === 'admin') {
+        if (in_array(Auth::user()->role, ['admin', 'staff'], true)) {
             return redirect()
                 ->route('admin.inquiries.index')
                 ->with('success', 'お問い合わせを登録しました。');
@@ -51,7 +51,7 @@ class InquiryController extends Controller
 
     public function index(Request $request)
     {
-        if (Auth::user()->role !== 'admin') {
+        if (! in_array(Auth::user()->role, ['admin', 'staff'], true)) {
             abort(403);
         }
 
@@ -83,6 +83,8 @@ class InquiryController extends Controller
 
         if ($assigneeId === 'unassigned') {
             $query->whereNull('assignee_id');
+        } elseif ($assigneeId === 'me') {
+            $query->where('assignee_id', Auth::id());
         } elseif ($assigneeId) {
             $query->where('assignee_id', $assigneeId);
         }
@@ -140,7 +142,7 @@ class InquiryController extends Controller
 
     public function show(Inquiry $inquiry)
     {
-        if (Auth::user()->role !== 'admin') {
+        if (! in_array(Auth::user()->role, ['admin', 'staff'], true)) {
             abort(403);
         }
 
@@ -193,7 +195,7 @@ class InquiryController extends Controller
 
     public function update(Request $request, Inquiry $inquiry)
     {
-        if (Auth::user()->role !== 'admin') {
+        if (! in_array(Auth::user()->role, ['admin', 'staff'], true)) {
             abort(403);
         }
 
@@ -300,7 +302,10 @@ class InquiryController extends Controller
             'body' => ['required', 'string', 'max:2000'],
         ]);
 
-        if (Auth::user()->role !== 'admin' && $inquiry->user_id !== Auth::id()) {
+        if (
+            ! in_array(Auth::user()->role, ['admin', 'staff'], true)
+            && $inquiry->user_id !== Auth::id()
+        ) {
             abort(403);
         }
 
@@ -313,5 +318,4 @@ class InquiryController extends Controller
         return back()
             ->with('success', 'コメントを投稿しました。');
     }
-
 }

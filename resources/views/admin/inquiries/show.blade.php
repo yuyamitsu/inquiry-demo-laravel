@@ -194,7 +194,9 @@
                     <span>投稿者：{{ $comment->user?->name ?? '不明' }}</span>
 
                     @if ($comment->user?->role === 'admin')
-                        <span class="commentRole adminRole">運営</span>
+                        <span class="commentRole adminRole">管理者</span>
+                    @elseif ($comment->user?->role === 'staff')
+                        <span class="commentRole staffRole">担当者</span>
                     @else
                         <span class="commentRole userRole">利用者</span>
                     @endif

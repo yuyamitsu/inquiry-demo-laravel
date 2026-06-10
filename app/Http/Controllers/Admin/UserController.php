@@ -10,6 +10,10 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
+        if ($request->user()->role !== 'admin') {
+            abort(403);
+        }
+        
         $keyword = $request->input('keyword');
         $role = $request->input('role');
 
