@@ -1,6 +1,19 @@
 @extends('layouts.app')
 
 @section('title', 'お問い合わせフォーム')
+@section('breadcrumbs')
+    @auth
+        @if (in_array(auth()->user()->role, ['admin', 'staff'], true))
+            <a href="{{ route('admin.inquiries.index') }}">問い合わせ一覧</a>
+        @else
+            <a href="{{ route('my.inquiries.index') }}">自分の問い合わせ一覧</a>
+        @endif
+
+        <span class="breadcrumbSeparator">＞</span>
+    @endauth
+
+    <span>問い合わせ登録</span>
+@endsection
 
 @section('content')
     <div class="pageHeader">

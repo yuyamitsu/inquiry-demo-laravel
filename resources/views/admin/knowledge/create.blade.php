@@ -1,6 +1,19 @@
 @extends('layouts.app')
 
 @section('title', 'ナレッジ作成')
+@section('breadcrumbs')
+    <a href="{{ route('admin.inquiries.index') }}">問い合わせ一覧</a>
+
+    @if ($inquiry)
+        <span class="breadcrumbSeparator">＞</span>
+        <a href="{{ route('admin.inquiries.show', $inquiry) }}">
+            問い合わせ詳細 #{{ $inquiry->id }}
+        </a>
+    @endif
+
+    <span class="breadcrumbSeparator">＞</span>
+    <span>ナレッジ作成</span>
+@endsection
 
 @section('content')
     <div class="pageHeader">

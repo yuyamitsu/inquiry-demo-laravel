@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', '自分の問い合わせ一覧')
+@section('breadcrumbs')
+    <span>自分の問い合わせ一覧</span>
+@endsection
 
 @section('content')
     <div class="pageHeader">

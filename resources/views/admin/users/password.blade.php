@@ -1,6 +1,17 @@
 @extends('layouts.app')
 
 @section('title', '仮パスワード再設定')
+@section('breadcrumbs')
+    <a href="{{ route('admin.inquiries.index') }}">問い合わせ一覧</a>
+    <span class="breadcrumbSeparator">＞</span>
+    <a href="{{ route('admin.users.index') }}">ユーザー管理</a>
+    <span class="breadcrumbSeparator">＞</span>
+    <a href="{{ route('admin.users.show', $user) }}">
+        ユーザー詳細 #{{ $user->id }}
+    </a>
+    <span class="breadcrumbSeparator">＞</span>
+    <span>仮パスワード再設定</span>
+@endsection
 
 @section('content')
     <div class="pageHeader">

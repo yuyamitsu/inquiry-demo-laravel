@@ -895,3 +895,32 @@ textarea {
 .userMenuDropdown form {
     margin: 0;
 }
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0 0 20px;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.breadcrumb a {
+    color: #2563eb;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb span {
+    color: #374151;
+    font-weight: 700;
+}
+
+.breadcrumbSeparator {
+    color: #9ca3af;
+}

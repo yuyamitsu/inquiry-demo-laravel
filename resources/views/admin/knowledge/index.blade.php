@@ -2,6 +2,12 @@
 
 @section('title', 'ナレッジ一覧')
 
+@section('breadcrumbs')
+    <a href="{{ route('admin.inquiries.index') }}">問い合わせ一覧</a>
+    <span class="breadcrumbSeparator">＞</span>
+    <span>ナレッジ一覧</span>
+@endsection
+
 @section('content')
     <div class="pageHeader">
         <div>

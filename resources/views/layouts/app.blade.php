@@ -65,6 +65,12 @@
     </header>
 
     <main class="container">
+        @hasSection('breadcrumbs')
+            <nav class="breadcrumb">
+                @yield('breadcrumbs')
+            </nav>
+        @endif
+
         @if (session('success'))
             <div class="successMessage">
                 {{ session('success') }}

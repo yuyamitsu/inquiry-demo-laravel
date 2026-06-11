@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('title', 'パスワード変更')
+@section('breadcrumbs')
+    <a href="{{ route('my.inquiries.index') }}">自分の問い合わせ一覧</a>
+    <span class="breadcrumbSeparator">＞</span>
+    <span>パスワード変更</span>
+@endsection
 
 @section('content')
     <div class="pageHeader">
