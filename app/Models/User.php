@@ -46,4 +46,9 @@ class User extends Authenticatable
         return $this->hasMany(Inquiry::class, 'assignee_id');
     }
 
+    public function knowledgeArticles()
+    {
+        return $this->hasMany(KnowledgeArticle::class, 'created_by');
+    }
+
 }
