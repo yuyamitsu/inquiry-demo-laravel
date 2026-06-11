@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -70,6 +71,40 @@ class UserController extends Controller
             'createdInquiries',
             'assignedInquiries'
         ));
+    }
+
+    public function editPassword(Request $request, User $user)
+    {
+        if ($request->user()->role !== 'admin') {
+            abort(403);
+        }
+
+        return view('admin.users.password', compact('user'));
+    }
+
+    public function updatePassword(Request $request, User $user)
+    {
+        if ($request->user()->role !== 'admin') {
+            abort(403);
+        }
+
+        $validated = $request->validate([
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'confirmed',
+                'regex:/^[!-~]+$/',
+            ],
+        ]);
+
+        $user->update([
+            'password' => Hash::make($validated['password']),
+        ]);
+
+        return redirect()
+            ->route('admin.users.show', $user)
+            ->with('success', '仮パスワードを再設定しました。ユーザーへ別途共有してください。');
     }
 
 }

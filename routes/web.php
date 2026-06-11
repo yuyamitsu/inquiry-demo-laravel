@@ -65,6 +65,12 @@ Route::middleware(['auth', 'admin'])
         Route::get('/users/{user}', [AdminUserController::class, 'show'])
             ->name('users.show');
 
+        Route::get('/users/{user}/password', [AdminUserController::class, 'editPassword'])
+            ->name('users.password.edit');
+
+        Route::put('/users/{user}/password', [AdminUserController::class, 'updatePassword'])
+            ->name('users.password.update');
+
         Route::get('/inquiries/{inquiry}', [InquiryController::class, 'show'])
             ->name('inquiries.show');
 

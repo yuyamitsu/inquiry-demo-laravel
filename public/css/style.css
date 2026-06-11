@@ -800,3 +800,9 @@ textarea {
     background-color: #dcfce7;
     color: #166534;
 }
+
+.pageActions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}

@@ -9,9 +9,15 @@
             <p>ユーザー情報と関連する問い合わせを確認できます。</p>
         </div>
 
-        <a href="{{ route('admin.users.index') }}" class="button subButton">
-            ユーザー一覧へ
-        </a>
+        <div class="pageActions">
+            <a href="{{ route('admin.users.password.edit', $user) }}" class="button">
+                仮パスワード再設定
+            </a>
+
+            <a href="{{ route('admin.users.index') }}" class="button subButton">
+                ユーザー一覧へ
+            </a>
+        </div>
     </div>
 
     <section class="card">
