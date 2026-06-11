@@ -29,10 +29,31 @@
             @auth
                 <div class="headerActions">
                     <div class="userMenu">
-                        <button type="button" class="userMenuButton">
-                            {{ auth()->user()->name }} さん
-                            <span class="userMenuArrow">▼</span>
-                        </button>
+                    <button type="button" class="userMenuButton">
+                        {{ auth()->user()->name }} さん
+
+                        @php
+                            $roleLabel = match (auth()->user()->role) {
+                                'admin' => '管理者',
+                                'staff' => '担当者',
+                                'user' => '利用者',
+                                default => '不明',
+                            };
+
+                            $roleClass = match (auth()->user()->role) {
+                                'admin' => 'roleAdmin',
+                                'staff' => 'roleStaff',
+                                'user' => 'roleUser',
+                                default => '',
+                            };
+                        @endphp
+
+                        <span class="roleBadge {{ $roleClass }}">
+                            {{ $roleLabel }}
+                        </span>
+
+                        <span class="userMenuArrow">▼</span>
+                    </button>
 
                         <div class="userMenuDropdown">
                             @if (in_array(auth()->user()->role, ['admin', 'staff'], true))
