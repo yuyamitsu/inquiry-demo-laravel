@@ -146,6 +146,8 @@ class InquiryController extends Controller
             abort(403);
         }
 
+        $inquiry->load('knowledgeArticle');
+
         $logs = $inquiry->logs()
             ->with('user')
             ->oldest()

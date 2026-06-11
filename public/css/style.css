@@ -806,3 +806,92 @@ textarea {
     gap: 10px;
     flex-wrap: wrap;
 }
+
+.knowledgeBody {
+    line-height: 1.8;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.checkboxGroup label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+}
+
+.checkboxGroup input {
+    width: auto;
+}
+
+.userMenu {
+    position: relative;
+}
+
+.userMenuButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    color: #374151;
+    font-size: 14px;
+    font-weight: 700;
+    background-color: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.userMenuButton:hover {
+    background-color: #f9fafb;
+}
+
+.userMenuArrow {
+    font-size: 11px;
+}
+
+.userMenuDropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 50;
+    display: none;
+    min-width: 180px;
+    padding: 8px;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.15);
+}
+
+.userMenu:hover .userMenuDropdown,
+.userMenu:focus-within .userMenuDropdown {
+    display: block;
+}
+
+.userMenuDropdown a,
+.userMenuDropdown button {
+    display: block;
+    width: 100%;
+    padding: 10px 12px;
+    color: #374151;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.4;
+    text-align: left;
+    text-decoration: none;
+    background: none;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.userMenuDropdown a:hover,
+.userMenuDropdown button:hover {
+    background-color: #f3f4f6;
+}
+
+.userMenuDropdown form {
+    margin: 0;
+}

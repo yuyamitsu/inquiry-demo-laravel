@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\KnowledgeArticleController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\InquiryController;
@@ -29,6 +30,9 @@ Route::post('/register', [AuthController::class, 'register'])
 |--------------------------------------------------------------------------
 | ログイン済み共通ルート
 |--------------------------------------------------------------------------
+|
+| admin / staff / user の全員が使うルート
+|
 */
 
 Route::middleware('auth')->group(function () {
@@ -48,28 +52,32 @@ Route::middleware('auth')->group(function () {
 
 /*
 |--------------------------------------------------------------------------
-| 管理者ルート
+| 管理側ルート
 |--------------------------------------------------------------------------
+|
+| /admin 配下。
+| AdminMiddleware 側で admin / staff を許可。
+| ただし、ユーザー管理や仮パスワード再設定は
+| Admin\UserController 側で admin のみに制限する。
+|
 */
 
 Route::middleware(['auth', 'admin'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
+
+        /*
+        |--------------------------------------------------------------------------
+        | 問い合わせ管理
+        |--------------------------------------------------------------------------
+        */
+
         Route::get('/inquiries', [InquiryController::class, 'index'])
             ->name('inquiries.index');
 
-        Route::get('/users', [AdminUserController::class, 'index'])
-            ->name('users.index');
-
-        Route::get('/users/{user}', [AdminUserController::class, 'show'])
-            ->name('users.show');
-
-        Route::get('/users/{user}/password', [AdminUserController::class, 'editPassword'])
-            ->name('users.password.edit');
-
-        Route::put('/users/{user}/password', [AdminUserController::class, 'updatePassword'])
-            ->name('users.password.update');
+        Route::get('/inquiries/{inquiry}/knowledge/create', [KnowledgeArticleController::class, 'createFromInquiry'])
+            ->name('inquiries.knowledge.create');
 
         Route::get('/inquiries/{inquiry}', [InquiryController::class, 'show'])
             ->name('inquiries.show');
@@ -79,6 +87,51 @@ Route::middleware(['auth', 'admin'])
 
         Route::delete('/inquiries/{inquiry}', [InquiryController::class, 'destroy'])
             ->name('inquiries.destroy');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | ナレッジ管理
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('/knowledge', [KnowledgeArticleController::class, 'index'])
+            ->name('knowledge.index');
+
+        Route::post('/knowledge', [KnowledgeArticleController::class, 'store'])
+            ->name('knowledge.store');
+
+        Route::get('/knowledge/{knowledgeArticle}/edit', [KnowledgeArticleController::class, 'edit'])
+            ->name('knowledge.edit');
+
+        Route::put('/knowledge/{knowledgeArticle}', [KnowledgeArticleController::class, 'update'])
+            ->name('knowledge.update');
+
+        Route::get('/knowledge/{knowledgeArticle}', [KnowledgeArticleController::class, 'show'])
+            ->name('knowledge.show');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | ユーザー管理
+        |--------------------------------------------------------------------------
+        |
+        | ルート自体は /admin 配下にあるが、
+        | 実際の利用は Admin\UserController 側で admin のみに制限する。
+        |
+        */
+
+        Route::get('/users', [AdminUserController::class, 'index'])
+            ->name('users.index');
+
+        Route::get('/users/{user}/password', [AdminUserController::class, 'editPassword'])
+            ->name('users.password.edit');
+
+        Route::put('/users/{user}/password', [AdminUserController::class, 'updatePassword'])
+            ->name('users.password.update');
+
+        Route::get('/users/{user}', [AdminUserController::class, 'show'])
+            ->name('users.show');
     });
 
 
@@ -86,6 +139,10 @@ Route::middleware(['auth', 'admin'])
 |--------------------------------------------------------------------------
 | マイページルート
 |--------------------------------------------------------------------------
+|
+| ログイン済みユーザー本人用。
+| 一般ユーザーだけでなく、admin / staff も自分のパスワード変更で使用する。
+|
 */
 
 Route::middleware('auth')
@@ -104,3 +161,4 @@ Route::middleware('auth')
         Route::put('/password', [PasswordController::class, 'update'])
             ->name('password.update');
     });
+    

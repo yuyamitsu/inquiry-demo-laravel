@@ -28,30 +28,42 @@
 
             @auth
                 <div class="headerActions">
-                    <span class="loginUserName">
-                        {{ auth()->user()->name }} さん
-                    </span>
-
-                    @if (auth()->user()->role === 'admin')
-                        <a href="{{ route('admin.users.index') }}" class="button subButton">
-                            ユーザー管理
-                        </a>
-                    @endif
-
-                    <a href="{{ route('my.password.edit') }}" class="button subButton">
-                        パスワード変更
-                    </a>
-
-                    <form method="POST" action="{{ route('logout') }}" class="logoutForm">
-                        @csrf
-                        <button type="submit" class="button subButton">
-                            ログアウト
+                    <div class="userMenu">
+                        <button type="button" class="userMenuButton">
+                            {{ auth()->user()->name }} さん
+                            <span class="userMenuArrow">▼</span>
                         </button>
-                    </form>
+
+                        <div class="userMenuDropdown">
+                            @if (in_array(auth()->user()->role, ['admin', 'staff'], true))
+                                <a href="{{ route('admin.knowledge.index') }}">
+                                    ナレッジ
+                                </a>
+                            @endif
+
+                            @if (auth()->user()->role === 'admin')
+                                <a href="{{ route('admin.users.index') }}">
+                                    ユーザー管理
+                                </a>
+                            @endif
+
+                            <a href="{{ route('my.password.edit') }}">
+                                パスワード変更
+                            </a>
+
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit">
+                                    ログアウト
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             @endauth
         </div>
     </header>
+
     <main class="container">
         @if (session('success'))
             <div class="successMessage">

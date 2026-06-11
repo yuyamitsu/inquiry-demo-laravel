@@ -3,7 +3,28 @@
 @section('title', '問い合わせ詳細')
 
 @section('content')
-    <h1>問い合わせ詳細</h1>
+    <div class="pageHeader">
+        <div>
+            <h1>問い合わせ詳細</h1>
+            <p>問い合わせ内容の確認と対応状況の更新ができます。</p>
+        </div>
+
+        <div class="pageActions">
+            @if ($inquiry->knowledgeArticle)
+                <a href="{{ route('admin.knowledge.show', $inquiry->knowledgeArticle) }}" class="button subButton">
+                    作成済みナレッジを見る
+                </a>
+            @else
+                <a href="{{ route('admin.inquiries.knowledge.create', $inquiry) }}" class="button">
+                    ナレッジ化する
+                </a>
+            @endif
+
+            <a href="{{ route('admin.inquiries.index') }}" class="button subButton">
+                一覧に戻る
+            </a>
+        </div>
+    </div>
 
     <section class="card">
         <h2>問い合わせ内容</h2>
