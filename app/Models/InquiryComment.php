@@ -10,6 +10,7 @@ class InquiryComment extends Model
         'inquiry_id',
         'user_id',
         'body',
+        'is_internal',
     ];
 
     public function inquiry()

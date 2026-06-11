@@ -1,17 +1,14 @@
+/*
+|--------------------------------------------------------------------------
+| Base
+|--------------------------------------------------------------------------
+*/
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: #f4f6f8;
     color: #333;
-}
-
-.container {
-    width: min(960px, calc(100% - 32px));
-    margin: 40px auto;
-    background-color: #fff;
-    padding: 32px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 h1 {
@@ -21,12 +18,50 @@ h1 {
 }
 
 h2 {
-    font-size: 20px;
     margin-top: 0;
     margin-bottom: 16px;
+    font-size: 20px;
 }
 
-/* Header */
+/*
+|--------------------------------------------------------------------------
+| Layout
+|--------------------------------------------------------------------------
+*/
+
+.container {
+    width: min(960px, calc(100% - 32px));
+    margin: 40px auto;
+    padding: 32px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.pageHeader {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: 24px;
+}
+
+.pageActions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.linkArea {
+    margin-top: 24px;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Header / User Menu
+|--------------------------------------------------------------------------
+*/
+
 .siteHeader {
     background-color: #ffffff;
     border-bottom: 1px solid #e5e7eb;
@@ -52,717 +87,6 @@ h2 {
     color: #2563eb;
 }
 
-.logoutForm {
-    margin: 0;
-}
-
-/* Layout */
-.pageHeader {
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    align-items: flex-start;
-    margin-bottom: 24px;
-}
-
-.linkArea {
-    margin-top: 24px;
-}
-
-/* Form */
-.formGroup {
-    margin-bottom: 18px;
-}
-
-label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 6px;
-}
-
-input,
-select,
-textarea {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 10px;
-    border: 1px solid #ccd3dc;
-    border-radius: 6px;
-    font-size: 15px;
-}
-
-textarea {
-    resize: vertical;
-}
-
-/* Button */
-.button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #2563eb;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-.button:hover {
-    background-color: #1d4ed8;
-}
-
-.subButton {
-    background-color: #6b7280;
-}
-
-.subButton:hover {
-    background-color: #4b5563;
-}
-
-.deleteButton {
-    background-color: #ef4444;
-}
-
-.deleteButton:hover {
-    background-color: #dc2626;
-}
-
-.smallButton {
-    padding: 6px 12px;
-    font-size: 13px;
-    white-space: nowrap;
-}
-
-/* Message */
-.errorText {
-    margin: 6px 0 0;
-    color: #dc2626;
-    font-size: 14px;
-}
-
-.successMessage {
-    margin-bottom: 20px;
-    padding: 12px 16px;
-    background-color: #dcfce7;
-    color: #166534;
-    border-radius: 8px;
-}
-
-.emptyText {
-    color: #6b7280;
-}
-
-/* Card */
-.card {
-    margin-bottom: 24px;
-    padding: 24px;
-    border: 1px solid #e5e7eb;
-    border-radius: 10px;
-}
-
-.detailList {
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    gap: 12px 20px;
-}
-
-.detailList dt {
-    font-weight: bold;
-    color: #555;
-    align-self: start;
-}
-
-.detailList dd {
-    margin: 0;
-    min-width: 0;
-    overflow-wrap: anywhere;
-    word-break: break-word;
-    line-height: 1.7;
-}
-
-/* Summary */
-.summaryArea {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 16px;
-    margin: 32px 0 24px;
-}
-
-.summaryCard {
-    position: relative;
-    display: block;
-    min-height: 96px;
-    padding: 18px 20px;
-    overflow: hidden;
-    background-color: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-left: 6px solid #64748b;
-    border-radius: 12px;
-    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
-    text-decoration: none;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.summaryCard:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.1);
-}
-
-.summaryCard::after {
-    content: "";
-    position: absolute;
-    right: -24px;
-    bottom: -24px;
-    width: 78px;
-    height: 78px;
-    border-radius: 50%;
-    background: rgba(15, 23, 42, 0.05);
-}
-
-.summaryLabel {
-    position: relative;
-    z-index: 1;
-    display: block;
-    margin-bottom: 10px;
-    color: #64748b;
-    font-size: 13px;
-    font-weight: 700;
-}
-
-.summaryCard strong {
-    position: relative;
-    z-index: 1;
-    display: block;
-    color: #111827;
-    font-size: 32px;
-    font-weight: 800;
-    line-height: 1;
-}
-
-.summaryNote {
-    position: relative;
-    z-index: 1;
-    display: block;
-    margin-top: 10px;
-    color: #64748b;
-    font-size: 12px;
-}
-
-.summaryAll {
-    border-left-color: #64748b;
-    background: #f8fafc;
-}
-
-.summaryNew {
-    border-left-color: #ef4444;
-    background: #fff7f7;
-}
-
-.summaryProgress {
-    border-left-color: #3b82f6;
-    background: #f8fbff;
-}
-
-.summaryAnswered {
-    border-left-color: #22c55e;
-    background: #f7fff9;
-}
-
-.summaryClosed {
-    border-left-color: #9ca3af;
-    background: #f9fafb;
-}
-
-/* Search */
-.searchBox {
-    display: grid;
-    grid-template-columns: 2fr repeat(3, 1fr);
-    gap: 14px;
-    margin-bottom: 16px;
-    padding: 20px;
-    background-color: #f9fafb;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-}
-
-.searchItem label {
-    display: block;
-    margin-bottom: 6px;
-    color: #374151;
-    font-size: 13px;
-    font-weight: 700;
-}
-
-.searchItem input,
-.searchItem select {
-    width: 100%;
-}
-
-.searchKeyword {
-    grid-column: span 2;
-}
-
-.searchActions {
-    display: flex;
-    gap: 12px;
-    align-items: flex-end;
-}
-
-.searchActions .button {
-    white-space: nowrap;
-}
-
-.resultText {
-    color: #4b5563;
-    margin-bottom: 12px;
-}
-
-/* Table */
-.tableWrapper {
-    overflow-x: auto;
-}
-
-.table {
-    width: 100%;
-    min-width: 1200px;
-    border-collapse: collapse;
-}
-
-.table th,
-.table td {
-    border-bottom: 1px solid #e5e7eb;
-    padding: 12px;
-    text-align: left;
-    vertical-align: middle;
-}
-
-.table th {
-    background-color: #f9fafb;
-    white-space: nowrap;
-}
-
-.table td {
-    font-size: 14px;
-}
-
-/* Status */
-.status {
-    display: inline-block;
-    padding: 4px 10px;
-    border-radius: 999px;
-    font-size: 13px;
-    white-space: nowrap;
-}
-
-.statusNew {
-    background-color: #fee2e2;
-    color: #991b1b;
-}
-
-.statusProgress {
-    background-color: #fef3c7;
-    color: #92400e;
-}
-
-.statusAnswered {
-    background-color: #dcfce7;
-    color: #166534;
-}
-
-.statusClosed {
-    background-color: #e5e7eb;
-    color: #374151;
-}
-
-.priorityBadge,
-.dueBadge {
-    display: inline-block;
-    padding: 4px 10px;
-    border-radius: 999px;
-    font-size: 13px;
-    white-space: nowrap;
-}
-
-.priorityLow {
-    background-color: #e5e7eb;
-    color: #374151;
-}
-
-.priorityMiddle {
-    background-color: #dbeafe;
-    color: #1e40af;
-}
-
-.priorityHigh {
-    background-color: #fef3c7;
-    color: #92400e;
-}
-
-.priorityUrgent {
-    background-color: #fee2e2;
-    color: #991b1b;
-    font-weight: 700;
-}
-
-.priorityUnset {
-    background-color: #f3f4f6;
-    color: #6b7280;
-}
-
-.dueNormal {
-    background-color: #dcfce7;
-    color: #166534;
-}
-
-.dueToday {
-    background-color: #fef3c7;
-    color: #92400e;
-    font-weight: 700;
-}
-
-.dueOver {
-    background-color: #fee2e2;
-    color: #991b1b;
-    font-weight: 700;
-}
-
-.dueUnset {
-    background-color: #f3f4f6;
-    color: #6b7280;
-}
-
-/* Pagination */
-.paginationArea {
-    margin-top: 24px;
-    display: flex;
-    justify-content: center;
-}
-
-/* Laravel標準ページネーションの巨大な矢印対策 */
-.paginationArea svg {
-    width: 18px;
-    height: 18px;
-}
-
-/* モバイル用とPC用が両方出るのを抑える */
-.paginationArea nav > div:first-child {
-    display: none;
-}
-
-.paginationArea nav > div:last-child {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-}
-
-/* Showing 11 to 20 of ... の表示 */
-.paginationArea p {
-    margin: 0;
-    color: #6b7280;
-    font-size: 14px;
-}
-
-/* ページ番号・Previous・Next周り */
-.paginationArea a,
-.paginationArea span {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 36px;
-    min-height: 36px;
-    padding: 6px 10px;
-    border: 1px solid #d1d5db;
-    color: #2563eb;
-    text-decoration: none;
-    background-color: #fff;
-    font-size: 14px;
-}
-
-.paginationArea a:hover {
-    background-color: #f3f4f6;
-}
-
-/* 現在ページ */
-.paginationArea span[aria-current="page"] span {
-    background-color: #2563eb;
-    color: #fff;
-    border-color: #2563eb;
-}
-
-/* ページリンクの横並び */
-.paginationArea nav span {
-    gap: 0;
-}
-
-/* History */
-.historyArea {
-    margin-top: 32px;
-    padding: 24px;
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-}
-
-.historyArea h2 {
-    margin-bottom: 16px;
-    font-size: 20px;
-}
-
-.historyItem {
-    padding: 16px 0;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.historyItem:last-child {
-    border-bottom: none;
-}
-
-.historyMeta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 12px;
-    margin-bottom: 8px;
-    color: #6b7280;
-    font-size: 13px;
-}
-
-.historyMessage {
-    margin: 0;
-    font-size: 15px;
-    font-weight: 600;
-}
-
-.historyDetail {
-    margin-top: 8px;
-    padding: 10px;
-    background: #f9fafb;
-    border-radius: 8px;
-    font-size: 13px;
-}
-
-.historyField {
-    display: block;
-    margin-bottom: 4px;
-    color: #374151;
-    font-weight: 600;
-}
-
-.historyBefore,
-.historyAfter {
-    display: block;
-    color: #4b5563;
-}
-
-/* Comment */
-.commentArea {
-    margin-top: 32px;
-    padding: 24px;
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-}
-
-.commentArea h2 {
-    margin-bottom: 16px;
-    font-size: 20px;
-}
-
-.commentItem {
-    padding: 16px 0;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.commentItem:last-of-type {
-    border-bottom: none;
-}
-
-.commentMeta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 12px;
-    margin-bottom: 8px;
-    color: #6b7280;
-    font-size: 13px;
-}
-
-.commentRole {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 600;
-}
-
-.adminRole {
-    background-color: #dbeafe;
-    color: #1e40af;
-}
-
-.staffRole {
-    background-color: #fef3c7;
-    color: #92400e;
-}
-
-.userRole {
-    background-color: #dcfce7;
-    color: #166534;
-}
-
-.commentBody {
-    margin: 0;
-    white-space: normal;
-    line-height: 1.7;
-}
-
-.commentForm {
-    margin-top: 24px;
-    padding-top: 20px;
-    border-top: 1px solid #e5e7eb;
-}
-
-/* Login */
-.loginWrapper {
-    display: flex;
-    justify-content: center;
-    margin-top: 40px;
-}
-
-.loginCard {
-    width: 100%;
-    max-width: 480px;
-    padding: 32px;
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-}
-
-.loginCard h1 {
-    margin-bottom: 8px;
-}
-
-.loginCard p {
-    margin-bottom: 16px;
-    color: #6b7280;
-}
-
-/* Tablet */
-@media (max-width: 900px) {
-    .summaryArea {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .searchBox {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .searchKeyword {
-        grid-column: span 2;
-    }
-
-    .searchActions {
-        grid-column: span 2;
-    }
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-    .container {
-        margin: 16px auto;
-        padding: 20px;
-    }
-
-    .siteHeaderInner {
-        width: min(960px, calc(100% - 32px));
-        flex-direction: column;
-        gap: 12px;
-        align-items: flex-start;
-    }
-
-    .pageHeader {
-        flex-direction: column;
-    }
-
-    .detailList {
-        grid-template-columns: 1fr;
-    }
-
-    .searchBox {
-        grid-template-columns: 1fr;
-    }
-
-    .searchKeyword {
-        grid-column: span 1;
-    }
-
-    .searchActions {
-        grid-column: span 1;
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .searchActions .button {
-        width: 100%;
-        box-sizing: border-box;
-        text-align: center;
-    }
-
-    .searchBox input,
-    .searchBox select {
-        width: 100%;
-    }
-}
-
-@media (max-width: 480px) {
-    .summaryArea {
-        grid-template-columns: 1fr;
-    }
-
-    .summaryCard strong {
-        font-size: 24px;
-    }
-}
-
-.tableLink {
-    display: inline-block;
-    max-width: 260px;
-    color: #2563eb;
-    font-weight: 600;
-    text-decoration: none;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.tableLink:hover {
-    text-decoration: underline;
-}
-
-.passwordInputWrap {
-    display: flex;
-    gap: 8px;
-}
-
-.passwordInputWrap input {
-    flex: 1;
-}
-
-.passwordToggleButton {
-    flex: 0 0 auto;
-    padding: 10px 14px;
-    border: 1px solid #ccd3dc;
-    border-radius: 6px;
-    background-color: #f9fafb;
-    color: #374151;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.passwordToggleButton:hover {
-    background-color: #f3f4f6;
-}
-
 .headerActions {
     display: flex;
     align-items: center;
@@ -777,52 +101,8 @@ textarea {
     white-space: nowrap;
 }
 
-.roleBadge {
-    display: inline-block;
-    padding: 4px 10px;
-    border-radius: 999px;
-    font-size: 13px;
-    font-weight: 700;
-    white-space: nowrap;
-}
-
-.roleAdmin {
-    background-color: #dbeafe;
-    color: #1e40af;
-}
-
-.roleStaff {
-    background-color: #fef3c7;
-    color: #92400e;
-}
-
-.roleUser {
-    background-color: #dcfce7;
-    color: #166534;
-}
-
-.pageActions {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.knowledgeBody {
-    line-height: 1.8;
-    white-space: normal;
-    overflow-wrap: anywhere;
-    word-break: break-word;
-}
-
-.checkboxGroup label {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 700;
-}
-
-.checkboxGroup input {
-    width: auto;
+.logoutForm {
+    margin: 0;
 }
 
 .userMenu {
@@ -896,6 +176,12 @@ textarea {
     margin: 0;
 }
 
+/*
+|--------------------------------------------------------------------------
+| Breadcrumb
+|--------------------------------------------------------------------------
+*/
+
 .breadcrumb {
     display: flex;
     align-items: center;
@@ -923,4 +209,789 @@ textarea {
 
 .breadcrumbSeparator {
     color: #9ca3af;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Form
+|--------------------------------------------------------------------------
+*/
+
+.formGroup {
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #ccd3dc;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.checkboxGroup label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+}
+
+.checkboxGroup input {
+    width: auto;
+}
+
+.passwordInputWrap {
+    display: flex;
+    gap: 8px;
+}
+
+.passwordInputWrap input {
+    flex: 1;
+}
+
+.passwordToggleButton {
+    flex: 0 0 auto;
+    padding: 10px 14px;
+    color: #374151;
+    font-size: 14px;
+    background-color: #f9fafb;
+    border: 1px solid #ccd3dc;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.passwordToggleButton:hover {
+    background-color: #f3f4f6;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Button
+|--------------------------------------------------------------------------
+*/
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #ffffff;
+    font-size: 14px;
+    text-decoration: none;
+    background-color: #2563eb;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #1d4ed8;
+}
+
+.subButton {
+    background-color: #6b7280;
+}
+
+.subButton:hover {
+    background-color: #4b5563;
+}
+
+.deleteButton {
+    background-color: #ef4444;
+}
+
+.deleteButton:hover {
+    background-color: #dc2626;
+}
+
+.smallButton {
+    padding: 6px 12px;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Message / Text
+|--------------------------------------------------------------------------
+*/
+
+.errorText {
+    margin: 6px 0 0;
+    color: #dc2626;
+    font-size: 14px;
+}
+
+.successMessage {
+    margin-bottom: 20px;
+    padding: 12px 16px;
+    color: #166534;
+    background-color: #dcfce7;
+    border-radius: 8px;
+}
+
+.emptyText {
+    color: #6b7280;
+}
+
+.resultText {
+    margin-bottom: 12px;
+    color: #4b5563;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Card / Detail
+|--------------------------------------------------------------------------
+*/
+
+.card {
+    margin-bottom: 24px;
+    padding: 24px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+}
+
+.detailList {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 12px 20px;
+}
+
+.detailList dt {
+    align-self: start;
+    color: #555555;
+    font-weight: bold;
+}
+
+.detailList dd {
+    min-width: 0;
+    margin: 0;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Summary
+|--------------------------------------------------------------------------
+*/
+
+.summaryArea {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin: 32px 0 24px;
+}
+
+.summaryCard {
+    position: relative;
+    display: block;
+    min-height: 96px;
+    padding: 18px 20px;
+    overflow: hidden;
+    text-decoration: none;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-left: 6px solid #64748b;
+    border-radius: 12px;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.summaryCard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.1);
+}
+
+.summaryCard::after {
+    content: "";
+    position: absolute;
+    right: -24px;
+    bottom: -24px;
+    width: 78px;
+    height: 78px;
+    background: rgba(15, 23, 42, 0.05);
+    border-radius: 50%;
+}
+
+.summaryLabel,
+.summaryCard strong,
+.summaryNote {
+    position: relative;
+    z-index: 1;
+    display: block;
+}
+
+.summaryLabel {
+    margin-bottom: 10px;
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.summaryCard strong {
+    color: #111827;
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.summaryNote {
+    margin-top: 10px;
+    color: #64748b;
+    font-size: 12px;
+}
+
+.summaryAll {
+    background: #f8fafc;
+    border-left-color: #64748b;
+}
+
+.summaryNew {
+    background: #fff7f7;
+    border-left-color: #ef4444;
+}
+
+.summaryProgress {
+    background: #f8fbff;
+    border-left-color: #3b82f6;
+}
+
+.summaryAnswered {
+    background: #f7fff9;
+    border-left-color: #22c55e;
+}
+
+.summaryClosed {
+    background: #f9fafb;
+    border-left-color: #9ca3af;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Search
+|--------------------------------------------------------------------------
+*/
+
+.searchBox {
+    display: grid;
+    grid-template-columns: 2fr repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 16px;
+    padding: 20px;
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+}
+
+.searchItem label {
+    display: block;
+    margin-bottom: 6px;
+    color: #374151;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.searchItem input,
+.searchItem select {
+    width: 100%;
+}
+
+.searchKeyword {
+    grid-column: span 2;
+}
+
+.searchActions {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+}
+
+.searchActions .button {
+    white-space: nowrap;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Table
+|--------------------------------------------------------------------------
+*/
+
+.tableWrapper {
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    min-width: 1200px;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 12px;
+    text-align: left;
+    vertical-align: middle;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.table th {
+    background-color: #f9fafb;
+    white-space: nowrap;
+}
+
+.table td {
+    font-size: 14px;
+}
+
+.tableLink {
+    display: inline-block;
+    max-width: 260px;
+    color: #2563eb;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tableLink:hover {
+    text-decoration: underline;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Badges
+|--------------------------------------------------------------------------
+*/
+
+.status,
+.priorityBadge,
+.dueBadge,
+.roleBadge,
+.commentRole,
+.commentType {
+    display: inline-block;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+.status,
+.priorityBadge,
+.dueBadge,
+.roleBadge {
+    padding: 4px 10px;
+    font-size: 13px;
+}
+
+.commentRole,
+.commentType {
+    padding: 3px 8px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.roleBadge {
+    font-weight: 700;
+}
+
+.statusNew,
+.priorityUrgent,
+.dueOver {
+    color: #991b1b;
+    background-color: #fee2e2;
+}
+
+.statusProgress,
+.priorityHigh,
+.dueToday,
+.roleStaff,
+.staffRole,
+.internalComment {
+    color: #92400e;
+    background-color: #fef3c7;
+}
+
+.statusAnswered,
+.dueNormal,
+.roleUser,
+.userRole,
+.publicComment {
+    color: #166534;
+    background-color: #dcfce7;
+}
+
+.statusClosed,
+.priorityLow {
+    color: #374151;
+    background-color: #e5e7eb;
+}
+
+.priorityUnset,
+.dueUnset {
+    color: #6b7280;
+    background-color: #f3f4f6;
+}
+
+.priorityMiddle,
+.roleAdmin,
+.adminRole,
+.operatorRole {
+    color: #1e40af;
+    background-color: #dbeafe;
+}
+
+.dueToday,
+.dueOver,
+.priorityUrgent {
+    font-weight: 700;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Pagination
+|--------------------------------------------------------------------------
+*/
+
+.paginationArea {
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+}
+
+/* Laravel標準ページネーションの巨大な矢印対策 */
+.paginationArea svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* モバイル用とPC用が両方出るのを抑える */
+.paginationArea nav > div:first-child {
+    display: none;
+}
+
+.paginationArea nav > div:last-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Showing 11 to 20 of ... の表示 */
+.paginationArea p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+/* ページ番号・Previous・Next周り */
+.paginationArea a,
+.paginationArea span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    min-height: 36px;
+    padding: 6px 10px;
+    color: #2563eb;
+    text-decoration: none;
+    background-color: #ffffff;
+    border: 1px solid #d1d5db;
+    font-size: 14px;
+}
+
+.paginationArea a:hover {
+    background-color: #f3f4f6;
+}
+
+/* 現在ページ */
+.paginationArea span[aria-current="page"] span {
+    color: #ffffff;
+    background-color: #2563eb;
+    border-color: #2563eb;
+}
+
+/* ページリンクの横並び */
+.paginationArea nav span {
+    gap: 0;
+}
+
+/*
+|--------------------------------------------------------------------------
+| History
+|--------------------------------------------------------------------------
+*/
+
+.historyArea {
+    margin-top: 32px;
+    padding: 24px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+}
+
+.historyArea h2 {
+    margin-bottom: 16px;
+    font-size: 20px;
+}
+
+.historyItem {
+    padding: 16px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.historyItem:last-child {
+    border-bottom: none;
+}
+
+.historyMeta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    margin-bottom: 8px;
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.historyMessage {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.historyDetail {
+    margin-top: 8px;
+    padding: 10px;
+    background: #f9fafb;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.historyField {
+    display: block;
+    margin-bottom: 4px;
+    color: #374151;
+    font-weight: 600;
+}
+
+.historyBefore,
+.historyAfter {
+    display: block;
+    color: #4b5563;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Comment
+|--------------------------------------------------------------------------
+*/
+
+.commentArea {
+    margin-top: 32px;
+    padding: 24px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+}
+
+.commentArea h2 {
+    margin-bottom: 16px;
+    font-size: 20px;
+}
+
+.commentItem {
+    margin-bottom: 14px;
+    padding: 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+}
+
+.commentItem:last-of-type {
+    margin-bottom: 0;
+}
+
+.publicCommentItem,
+.customerCommentItem {
+    background-color: #ffffff;
+    border-left: 5px solid #22c55e;
+}
+
+.internalMemoItem {
+    background-color: #f3f4f6;
+    border-color: #d1d5db;
+    border-left: 5px solid #f59e0b;
+}
+
+.operatorCommentItem {
+    background-color: #ffffff;
+    border-left: 5px solid #3b82f6;
+}
+
+.commentMeta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    margin-bottom: 8px;
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.commentBody {
+    margin: 0;
+    line-height: 1.7;
+    white-space: normal;
+}
+
+.commentForm {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.internalMemoNotice {
+    margin: 10px 0;
+    padding: 8px 10px;
+    color: #92400e;
+    font-size: 12px;
+    font-weight: 700;
+    background-color: #fff7ed;
+    border: 1px solid #fdba74;
+    border-radius: 6px;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Knowledge
+|--------------------------------------------------------------------------
+*/
+
+.knowledgeBody {
+    line-height: 1.8;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Login
+|--------------------------------------------------------------------------
+*/
+
+.loginWrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.loginCard {
+    width: 100%;
+    max-width: 480px;
+    padding: 32px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+}
+
+.loginCard h1 {
+    margin-bottom: 8px;
+}
+
+.loginCard p {
+    margin-bottom: 16px;
+    color: #6b7280;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Responsive
+|--------------------------------------------------------------------------
+*/
+
+@media (max-width: 900px) {
+    .summaryArea {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .searchBox {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .searchKeyword {
+        grid-column: span 2;
+    }
+
+    .searchActions {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin: 16px auto;
+        padding: 20px;
+    }
+
+    .siteHeaderInner {
+        width: min(960px, calc(100% - 32px));
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+    }
+
+    .pageHeader {
+        flex-direction: column;
+    }
+
+    .detailList {
+        grid-template-columns: 1fr;
+    }
+
+    .searchBox {
+        grid-template-columns: 1fr;
+    }
+
+    .searchKeyword,
+    .searchActions {
+        grid-column: span 1;
+    }
+
+    .searchActions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .searchActions .button {
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+    }
+
+    .searchBox input,
+    .searchBox select {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .summaryArea {
+        grid-template-columns: 1fr;
+    }
+
+    .summaryCard strong {
+        font-size: 24px;
+    }
 }

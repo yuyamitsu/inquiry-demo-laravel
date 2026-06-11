@@ -189,6 +189,7 @@ class InquiryController extends Controller
 
         $comments = $inquiry->comments()
             ->with('user')
+            ->where('is_internal', false)
             ->oldest()
             ->get();
 
@@ -311,10 +312,14 @@ class InquiryController extends Controller
             abort(403);
         }
 
+        $isInternal = in_array(Auth::user()->role, ['admin', 'staff'], true)
+            && $request->boolean('is_internal');
+
         InquiryComment::create([
             'inquiry_id' => $inquiry->id,
             'user_id' => Auth::id(),
             'body' => $validated['body'],
+            'is_internal' => $isInternal,
         ]);
 
         return back()

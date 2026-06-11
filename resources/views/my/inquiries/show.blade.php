@@ -119,15 +119,15 @@
         <h2>コメントスレッド</h2>
 
         @forelse ($comments as $comment)
-            <div class="commentItem">
+            <div class="commentItem {{ in_array($comment->user?->role, ['admin', 'staff'], true) ? 'operatorCommentItem' : 'customerCommentItem' }}">
                 <div class="commentMeta">
                     <span>{{ $comment->created_at->timezone('Asia/Tokyo')->format('Y/m/d H:i') }}</span>
                     <span>投稿者：{{ $comment->user?->name ?? '不明' }}</span>
 
-                    @if ($comment->user?->role === 'admin')
-                        <span class="commentRole adminRole">運営</span>
+                    @if (in_array($comment->user?->role, ['admin', 'staff'], true))
+                        <span class="commentRole operatorRole">運営</span>
                     @else
-                        <span class="commentRole userRole">利用者</span>
+                        <span class="commentRole userRole">あなた</span>
                     @endif
                 </div>
 

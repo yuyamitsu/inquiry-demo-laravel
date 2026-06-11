@@ -213,24 +213,36 @@
         <h2>コメントスレッド</h2>
 
         @forelse ($comments as $comment)
-            <div class="commentItem">
-                <div class="commentMeta">
-                    <span>{{ $comment->created_at->timezone('Asia/Tokyo')->format('Y/m/d H:i') }}</span>
-                    <span>投稿者：{{ $comment->user?->name ?? '不明' }}</span>
+        <div class="commentItem {{ $comment->is_internal ? 'internalMemoItem' : 'publicCommentItem' }}">
+            <div class="commentMeta">
+                <span>{{ $comment->created_at->timezone('Asia/Tokyo')->format('Y/m/d H:i') }}</span>
+                <span>投稿者：{{ $comment->user?->name ?? '不明' }}</span>
 
-                    @if ($comment->user?->role === 'admin')
-                        <span class="commentRole adminRole">管理者</span>
-                    @elseif ($comment->user?->role === 'staff')
-                        <span class="commentRole staffRole">担当者</span>
-                    @else
-                        <span class="commentRole userRole">利用者</span>
-                    @endif
-                </div>
+                @if ($comment->user?->role === 'admin')
+                    <span class="commentRole adminRole">管理者</span>
+                @elseif ($comment->user?->role === 'staff')
+                    <span class="commentRole staffRole">担当者</span>
+                @else
+                    <span class="commentRole userRole">利用者</span>
+                @endif
 
-                <p class="commentBody">
-                    {!! nl2br(e($comment->body)) !!}
-                </p>
+                @if ($comment->is_internal)
+                    <span class="commentType internalComment">内部メモ</span>
+                @else
+                    <span class="commentType publicComment">公開コメント</span>
+                @endif
             </div>
+
+            @if ($comment->is_internal)
+                <div class="internalMemoNotice">
+                    社内用メモ（一般ユーザーには表示されません）
+                </div>
+            @endif
+
+            <p class="commentBody">
+                {!! nl2br(e($comment->body)) !!}
+            </p>
+        </div>
         @empty
             <p class="emptyText">コメントはまだありません。</p>
         @endforelse
@@ -250,6 +262,22 @@
                 @error('body')
                     <p class="errorText">{{ $message }}</p>
                 @enderror
+            </div>
+
+            <div class="formGroup checkboxGroup">
+                <label>
+                    <input
+                        type="checkbox"
+                        name="is_internal"
+                        value="1"
+                        @checked(old('is_internal'))
+                    >
+                    内部メモとして投稿する
+                </label>
+
+                <p class="formHelp">
+                    内部メモは管理者・スタッフのみに表示され、一般ユーザーには表示されません。
+                </p>
             </div>
 
             <button type="submit" class="button">
