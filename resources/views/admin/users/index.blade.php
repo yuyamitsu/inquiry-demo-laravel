@@ -14,9 +14,15 @@
             <p>登録済みユーザーと権限、問い合わせ件数を確認できます。</p>
         </div>
 
-        <a href="{{ route('admin.inquiries.index') }}" class="button subButton">
-            問い合わせ一覧へ
-        </a>
+        <div class="pageActions">
+            <a href="{{ route('admin.users.create') }}" class="button">
+                新規ユーザー作成
+            </a>
+
+            <a href="{{ route('admin.inquiries.index') }}" class="button subButton">
+                問い合わせ一覧へ
+            </a>
+        </div>
     </div>
 
     <form method="GET" action="{{ route('admin.users.index') }}" class="searchBox">

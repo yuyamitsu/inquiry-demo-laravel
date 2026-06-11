@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -71,6 +72,40 @@ class UserController extends Controller
             'createdInquiries',
             'assignedInquiries'
         ));
+    }
+
+    public function create(Request $request)
+    {
+        if ($request->user()->role !== 'admin') {
+            abort(403);
+        }
+
+        return view('admin.users.create');
+    }
+
+    public function store(Request $request)
+    {
+        if ($request->user()->role !== 'admin') {
+            abort(403);
+        }
+
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:50'],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+            'role' => ['required', Rule::in(['admin', 'staff', 'user'])],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'role' => $validated['role'],
+            'password' => Hash::make($validated['password']),
+        ]);
+
+        return redirect()
+            ->route('admin.users.show', $user)
+            ->with('success', 'ユーザーを作成しました。');
     }
 
     public function editPassword(Request $request, User $user)

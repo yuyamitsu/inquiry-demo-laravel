@@ -124,6 +124,12 @@ Route::middleware(['auth', 'admin'])
         Route::get('/users', [AdminUserController::class, 'index'])
             ->name('users.index');
 
+        Route::get('/users/create', [AdminUserController::class, 'create'])
+            ->name('users.create');
+
+        Route::post('/users', [AdminUserController::class, 'store'])
+            ->name('users.store');
+
         Route::get('/users/{user}/password', [AdminUserController::class, 'editPassword'])
             ->name('users.password.edit');
 
@@ -161,4 +167,3 @@ Route::middleware('auth')
         Route::put('/password', [PasswordController::class, 'update'])
             ->name('password.update');
     });
-    
