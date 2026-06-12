@@ -15,11 +15,23 @@ class InquiryController extends Controller
 {
     public function create()
     {
+        if (Auth::user()->role === 'user' && ! session('faq_checked')) {
+            return redirect()
+                ->route('faqs.index')
+                ->with('error', '問い合わせ前にFAQをご確認ください。');
+        }
+
         return view('inquiries.create');
     }
 
     public function store(Request $request)
     {
+        if (Auth::user()->role === 'user' && ! session('faq_checked')) {
+            return redirect()
+                ->route('faqs.index')
+                ->with('error', '問い合わせ前にFAQをご確認ください。');
+        }
+
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:50'],
             'email' => ['required', 'email', 'max:255'],
@@ -37,6 +49,10 @@ class InquiryController extends Controller
             'body' => $validated['body'],
             'status' => '未対応',
         ]);
+
+        if (Auth::user()->role === 'user') {
+            $request->session()->forget('faq_checked');
+        }
 
         if (in_array(Auth::user()->role, ['admin', 'staff'], true)) {
             return redirect()

@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\FaqController as AdminFaqController;
 use App\Http\Controllers\Admin\KnowledgeArticleController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\PasswordController;
 use Illuminate\Support\Facades\Route;
@@ -36,8 +38,45 @@ Route::post('/register', [AuthController::class, 'register'])
 */
 
 Route::middleware('auth')->group(function () {
+    /*
+    |--------------------------------------------------------------------------
+    | ログアウト
+    |--------------------------------------------------------------------------
+    */
+
     Route::post('/logout', [AuthController::class, 'logout'])
         ->name('logout');
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | ユーザー向けFAQ
+    |--------------------------------------------------------------------------
+    |
+    | 問い合わせ前に確認してもらうFAQ。
+    | ナレッジとは別の、ユーザー公開用FAQ。
+    |
+    */
+
+    Route::get('/faq', [FaqController::class, 'index'])
+        ->name('faqs.index');
+
+    Route::get('/faq/{faq}', [FaqController::class, 'show'])
+        ->name('faqs.show');
+
+    Route::post('/faq/confirm', [FaqController::class, 'confirm'])
+        ->name('faqs.confirm');
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | 問い合わせ登録
+    |--------------------------------------------------------------------------
+    |
+    | InquiryController 側で、
+    | 一般ユーザーはFAQ確認済みでないと問い合わせフォームへ進めないようにする。
+    |
+    */
 
     Route::get('/', [InquiryController::class, 'create'])
         ->name('inquiries.create');
@@ -57,8 +96,8 @@ Route::middleware('auth')->group(function () {
 |
 | /admin 配下。
 | AdminMiddleware 側で admin / staff を許可。
-| ただし、ユーザー管理や仮パスワード再設定は
-| Admin\UserController 側で admin のみに制限する。
+| ただし、ユーザー管理・仮パスワード再設定・FAQ管理などは
+| 各Controller側で admin のみに制限する。
 |
 */
 
@@ -93,6 +132,10 @@ Route::middleware(['auth', 'admin'])
         |--------------------------------------------------------------------------
         | ナレッジ管理
         |--------------------------------------------------------------------------
+        |
+        | 管理者・staff向けの内部ナレッジ。
+        | ユーザーには直接見せない。
+        |
         */
 
         Route::get('/knowledge', [KnowledgeArticleController::class, 'index'])
@@ -109,6 +152,21 @@ Route::middleware(['auth', 'admin'])
 
         Route::get('/knowledge/{knowledgeArticle}', [KnowledgeArticleController::class, 'show'])
             ->name('knowledge.show');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | FAQ管理
+        |--------------------------------------------------------------------------
+        |
+        | ユーザー向けFAQの管理画面。
+        | /admin 配下にはあるが、実際の操作は
+        | Admin\FaqController 側で admin のみに制限する。
+        |
+        */
+
+        Route::resource('faqs', AdminFaqController::class)
+            ->except(['show']);
 
 
         /*
@@ -167,3 +225,4 @@ Route::middleware('auth')
         Route::put('/password', [PasswordController::class, 'update'])
             ->name('password.update');
     });
+    

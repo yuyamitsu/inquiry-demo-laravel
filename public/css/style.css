@@ -227,7 +227,7 @@ label {
     font-weight: bold;
 }
 
-input,
+input:not([type="checkbox"]):not([type="radio"]),
 select,
 textarea {
     width: 100%;
@@ -236,6 +236,25 @@ textarea {
     border: 1px solid #ccd3dc;
     border-radius: 6px;
     font-size: 15px;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    width: auto;
+    padding: 0;
+    margin: 0;
+}
+
+.checkboxLabel {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.checkboxLabel input {
+    flex-shrink: 0;
 }
 
 textarea {
@@ -994,4 +1013,38 @@ textarea {
     .summaryCard strong {
         font-size: 24px;
     }
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+    vertical-align: middle;
+    line-height: 1.6;
+}
+
+th {
+    background-color: #f9fafb;
+    color: #374151;
+    font-size: 14px;
+}
+
+td {
+    font-size: 14px;
+}
+
+.tableActions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.tableActions form {
+    margin: 0;
 }

@@ -29,40 +29,56 @@
             @auth
                 <div class="headerActions">
                     <div class="userMenu">
-                    <button type="button" class="userMenuButton">
-                        {{ auth()->user()->name }} さん
+                        <button type="button" class="userMenuButton">
+                            {{ auth()->user()->name }} さん
 
-                        @php
-                            $roleLabel = match (auth()->user()->role) {
-                                'admin' => '管理者',
-                                'staff' => '担当者',
-                                'user' => '利用者',
-                                default => '不明',
-                            };
+                            @php
+                                $roleLabel = match (auth()->user()->role) {
+                                    'admin' => '管理者',
+                                    'staff' => '担当者',
+                                    'user' => '利用者',
+                                    default => '不明',
+                                };
 
-                            $roleClass = match (auth()->user()->role) {
-                                'admin' => 'roleAdmin',
-                                'staff' => 'roleStaff',
-                                'user' => 'roleUser',
-                                default => '',
-                            };
-                        @endphp
+                                $roleClass = match (auth()->user()->role) {
+                                    'admin' => 'roleAdmin',
+                                    'staff' => 'roleStaff',
+                                    'user' => 'roleUser',
+                                    default => '',
+                                };
+                            @endphp
 
-                        <span class="roleBadge {{ $roleClass }}">
-                            {{ $roleLabel }}
-                        </span>
+                            <span class="roleBadge {{ $roleClass }}">
+                                {{ $roleLabel }}
+                            </span>
 
-                        <span class="userMenuArrow">▼</span>
-                    </button>
+                            <span class="userMenuArrow">▼</span>
+                        </button>
 
                         <div class="userMenuDropdown">
                             @if (in_array(auth()->user()->role, ['admin', 'staff'], true))
+                                <a href="{{ route('admin.inquiries.index') }}">
+                                    問い合わせ一覧
+                                </a>
+
                                 <a href="{{ route('admin.knowledge.index') }}">
                                     ナレッジ
                                 </a>
+                            @else
+                                <a href="{{ route('my.inquiries.index') }}">
+                                    自分の問い合わせ
+                                </a>
                             @endif
 
+                            <a href="{{ route('faqs.index') }}">
+                                FAQ
+                            </a>
+
                             @if (auth()->user()->role === 'admin')
+                                <a href="{{ route('admin.faqs.index') }}">
+                                    FAQ管理
+                                </a>
+
                                 <a href="{{ route('admin.users.index') }}">
                                     ユーザー管理
                                 </a>
