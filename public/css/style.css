@@ -1066,3 +1066,86 @@ td {
 .tableActions form {
     margin: 0;
 }
+
+/*
+|--------------------------------------------------------------------------
+| FAQ
+|--------------------------------------------------------------------------
+*/
+
+.sectionHeader {
+    margin-bottom: 20px;
+}
+
+.sectionHeader h2 {
+    margin-bottom: 6px;
+}
+
+.sectionHeader p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.faqList {
+    display: grid;
+    gap: 16px;
+}
+
+.faqItem {
+    position: relative;
+    padding: 20px 22px;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-left: 6px solid #2563eb;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.04);
+}
+
+.faqItem:hover {
+    background-color: #f9fafb;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+.faqMeta {
+    margin-bottom: 10px;
+}
+
+.faqCategory {
+    display: inline-block;
+    padding: 4px 10px;
+    color: #1e40af;
+    font-size: 12px;
+    font-weight: 700;
+    background-color: #dbeafe;
+    border-radius: 999px;
+}
+
+.faqTitle {
+    margin: 0 0 12px;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.faqTitle a {
+    color: #111827;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.faqTitle a::before {
+    content: "Q. ";
+    color: #2563eb;
+}
+
+.faqTitle a:hover {
+    color: #2563eb;
+    text-decoration: underline;
+}
+
+.faqSummary {
+    margin: 0;
+    color: #4b5563;
+    font-size: 14px;
+    line-height: 1.8;
+}

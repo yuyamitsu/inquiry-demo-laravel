@@ -59,7 +59,10 @@
     </section>
 
     <section class="card">
-        <h2>FAQ一覧</h2>
+        <div class="sectionHeader">
+            <h2>FAQ一覧</h2>
+            <p>該当する質問を選択すると、詳しい回答を確認できます。</p>
+        </div>
 
         @if ($faqs->isEmpty())
             <p class="emptyText">
@@ -70,23 +73,27 @@
                 @foreach ($faqs as $faq)
                     <article class="faqItem">
                         <div class="faqMeta">
-                            <span>{{ $faq->category ?? '未分類' }}</span>
+                            <span class="faqCategory">
+                                {{ $faq->category ?? '未分類' }}
+                            </span>
                         </div>
 
-                        <h3>
+                        <h3 class="faqTitle">
                             <a href="{{ route('faqs.show', $faq) }}">
                                 {{ $faq->title }}
                             </a>
                         </h3>
 
-                        <p>
+                        <p class="faqSummary">
                             {{ \Illuminate\Support\Str::limit($faq->body, 120) }}
                         </p>
                     </article>
                 @endforeach
             </div>
 
-            {{ $faqs->links() }}
+            <div class="paginationArea">
+                {{ $faqs->links() }}
+            </div>
         @endif
     </section>
 
@@ -100,7 +107,7 @@
             @csrf
 
             <div class="formGroup">
-                <label>
+                <label class="checkboxLabel">
                     <input type="checkbox" name="faq_checked" value="1" required>
                     FAQを確認しました
                 </label>
