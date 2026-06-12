@@ -49,23 +49,6 @@
                 </span>
             </dd>
 
-            <dt>優先度</dt>
-            <dd>
-                @php
-                    $priorityClass = match ($inquiry->priority) {
-                        '低' => 'priorityLow',
-                        '中' => 'priorityMiddle',
-                        '高' => 'priorityHigh',
-                        '緊急' => 'priorityUrgent',
-                        default => 'priorityUnset',
-                    };
-                @endphp
-
-                <span class="priorityBadge {{ $priorityClass }}">
-                    {{ $inquiry->priority ?? '未設定' }}
-                </span>
-            </dd>
-
             <dt>対応期限</dt>
             <dd>
                 @php

@@ -29,7 +29,6 @@
                     <th>件名</th>
                     <th>ステータス</th>
                     <th>担当者</th>
-                    <th>優先度</th>
                     <th>対応期限</th>
                     <th>受付日時</th>
                 </tr>
@@ -66,21 +65,6 @@
 
                         <td>
                             @php
-                                $priorityClass = match ($inquiry->priority) {
-                                    '低' => 'priorityLow',
-                                    '中' => 'priorityMiddle',
-                                    '高' => 'priorityHigh',
-                                    '緊急' => 'priorityUrgent',
-                                    default => 'priorityUnset',
-                                };
-                            @endphp
-
-                            <span class="priorityBadge {{ $priorityClass }}">
-                                {{ $inquiry->priority ?? '未設定' }}
-                            </span>
-                        </td>
-                        <td>
-                            @php
                                 $dueDate = $inquiry->due_date
                                     ? \Carbon\Carbon::parse($inquiry->due_date)
                                     : null;
@@ -111,7 +95,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7">
+                        <td colspan="6">
                             登録した問い合わせはありません。
                         </td>
                     </tr>
