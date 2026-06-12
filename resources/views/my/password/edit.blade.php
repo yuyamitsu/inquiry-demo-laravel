@@ -2,8 +2,14 @@
 
 @section('title', 'パスワード変更')
 @section('breadcrumbs')
-    <a href="{{ route('my.inquiries.index') }}">自分の問い合わせ一覧</a>
-    <span class="breadcrumbSeparator">＞</span>
+    @if (in_array(auth()->user()->role, ['admin', 'staff'], true))
+        <a href="{{ route('admin.dashboard.index') }}">ダッシュボード</a>
+        <span class="breadcrumbSeparator">＞</span>
+    @else
+        <a href="{{ route('my.inquiries.index') }}">自分の問い合わせ</a>
+        <span class="breadcrumbSeparator">＞</span>
+    @endif
+
     <span>パスワード変更</span>
 @endsection
 
@@ -14,9 +20,17 @@
             <p>現在のパスワードを確認し、新しいパスワードに変更できます。</p>
         </div>
 
-        <a href="{{ route('my.inquiries.index') }}" class="button subButton">
-            自分の問い合わせ一覧へ
-        </a>
+        <div class="pageActions">
+            @if (in_array(auth()->user()->role, ['admin', 'staff'], true))
+                <a href="{{ route('admin.dashboard.index') }}" class="button subButton">
+                    ダッシュボードへ
+                </a>
+            @else
+                <a href="{{ route('my.inquiries.index') }}" class="button subButton">
+                    自分の問い合わせへ
+                </a>
+            @endif
+        </div>
     </div>
 
     <div class="card">
