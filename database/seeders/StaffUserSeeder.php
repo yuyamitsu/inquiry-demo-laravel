@@ -6,25 +6,25 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
-class NormalUserSeeder extends Seeder
+class StaffUserSeeder extends Seeder
 {
     public function run(): void
     {
         $users = [
             [
-                'name' => '一般ユーザー',
-                'email' => 'user@example.com',
-                'role' => 'user',
+                'name' => '佐藤 担当者',
+                'email' => 'sato@example.com',
+                'role' => 'staff',
             ],
             [
-                'name' => '山田 利用者',
-                'email' => 'yamada@example.com',
-                'role' => 'user',
+                'name' => '鈴木 担当者',
+                'email' => 'suzuki@example.com',
+                'role' => 'staff',
             ],
             [
-                'name' => '田中 利用者',
-                'email' => 'tanaka@example.com',
-                'role' => 'user',
+                'name' => '高橋 担当者',
+                'email' => 'takahashi@example.com',
+                'role' => 'staff',
             ],
         ];
 
