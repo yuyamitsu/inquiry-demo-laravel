@@ -24,55 +24,65 @@
         </div>
     </div>
 
-    <div class="dashboardSummary">
-        <a href="{{ route('admin.inquiries.index') }}" class="dashboardCard">
-            <span>全問い合わせ</span>
+    <div class="summaryArea">
+        <a href="{{ route('admin.inquiries.index') }}" class="summaryCard summaryAll">
+            <span class="summaryLabel">全件</span>
             <strong>{{ $totalCount }}</strong>
+            <span class="summaryNote">登録済み</span>
         </a>
 
-        <a href="{{ route('admin.inquiries.index', ['status' => '未対応']) }}" class="dashboardCard dashboardNew">
-            <span>未対応</span>
+        <a href="{{ route('admin.inquiries.index', ['status' => '未対応']) }}" class="summaryCard summaryNew">
+            <span class="summaryLabel">未対応</span>
             <strong>{{ $newCount }}</strong>
+            <span class="summaryNote">対応が必要</span>
         </a>
 
-        <a href="{{ route('admin.inquiries.index', ['status' => '対応中']) }}" class="dashboardCard dashboardProgress">
-            <span>対応中</span>
+        <a href="{{ route('admin.inquiries.index', ['status' => '対応中']) }}" class="summaryCard summaryProgress">
+            <span class="summaryLabel">対応中</span>
             <strong>{{ $progressCount }}</strong>
+            <span class="summaryNote">処理中</span>
         </a>
 
-        <a href="{{ route('admin.inquiries.index', ['status' => '回答済み']) }}" class="dashboardCard dashboardAnswered">
-            <span>回答済み</span>
+        <a href="{{ route('admin.inquiries.index', ['status' => '回答済み']) }}" class="summaryCard summaryAnswered">
+            <span class="summaryLabel">回答済み</span>
             <strong>{{ $answeredCount }}</strong>
+            <span class="summaryNote">回答完了</span>
         </a>
 
-        <a href="{{ route('admin.inquiries.index', ['status' => 'クローズ']) }}" class="dashboardCard dashboardClosed">
-            <span>クローズ</span>
+        <a href="{{ route('admin.inquiries.index', ['status' => 'クローズ']) }}" class="summaryCard summaryClosed">
+            <span class="summaryLabel">クローズ</span>
             <strong>{{ $closedCount }}</strong>
+            <span class="summaryNote">完了済み</span>
         </a>
 
-        <a href="{{ route('admin.inquiries.index') }}" class="dashboardCard dashboardWarning">
-            <span>期限切れ</span>
+        <a href="{{ route('admin.inquiries.index') }}" class="summaryCard summaryOverdue">
+            <span class="summaryLabel">期限切れ</span>
             <strong>{{ $overdueCount }}</strong>
+            <span class="summaryNote">要確認</span>
         </a>
 
-        <a href="{{ route('admin.inquiries.index') }}" class="dashboardCard dashboardToday">
-            <span>本日期限</span>
+        <a href="{{ route('admin.inquiries.index') }}" class="summaryCard summaryToday">
+            <span class="summaryLabel">本日期限</span>
             <strong>{{ $dueTodayCount }}</strong>
+            <span class="summaryNote">本日対応</span>
         </a>
 
-        <a href="{{ route('admin.inquiries.index') }}" class="dashboardCard dashboardUrgent">
-            <span>緊急</span>
+        <a href="{{ route('admin.inquiries.index') }}" class="summaryCard summaryUrgent">
+            <span class="summaryLabel">緊急</span>
             <strong>{{ $urgentCount }}</strong>
+            <span class="summaryNote">優先対応</span>
         </a>
 
-        <a href="{{ route('admin.inquiries.index') }}" class="dashboardCard dashboardUnassigned">
-            <span>担当者未設定</span>
+        <a href="{{ route('admin.inquiries.index') }}" class="summaryCard summaryUnassigned">
+            <span class="summaryLabel">担当者未設定</span>
             <strong>{{ $unassignedCount }}</strong>
+            <span class="summaryNote">割り当て待ち</span>
         </a>
 
-        <a href="{{ route('admin.inquiries.index') }}" class="dashboardCard dashboardMine">
-            <span>自分の担当</span>
+        <a href="{{ route('admin.inquiries.index') }}" class="summaryCard summaryMine">
+            <span class="summaryLabel">自分の担当</span>
             <strong>{{ $myAssignedCount }}</strong>
+            <span class="summaryNote">未クローズ</span>
         </a>
     </div>
 

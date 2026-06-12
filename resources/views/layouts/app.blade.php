@@ -12,7 +12,7 @@
         <div class="siteHeaderInner">
             @auth
                 @if (in_array(auth()->user()->role, ['admin', 'staff'], true))
-                    <a href="{{ route('admin.inquiries.index') }}" class="siteTitle">
+                    <a href="{{ route('admin.dashboard.index') }}" class="siteTitle">
                         問い合わせ管理Demo
                     </a>
                 @else
@@ -57,6 +57,10 @@
 
                         <div class="userMenuDropdown">
                             @if (in_array(auth()->user()->role, ['admin', 'staff'], true))
+                                <a href="{{ route('admin.dashboard.index') }}">
+                                    ダッシュボード
+                                </a>
+
                                 <a href="{{ route('admin.inquiries.index') }}">
                                     問い合わせ一覧
                                 </a>

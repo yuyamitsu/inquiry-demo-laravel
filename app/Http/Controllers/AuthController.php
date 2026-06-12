@@ -26,7 +26,7 @@ class AuthController extends Controller
 
             if (in_array(Auth::user()->role, ['admin', 'staff'], true)) {
                 return redirect()
-                    ->route('admin.inquiries.index')
+                    ->route('admin.dashboard.index')
                     ->with('success', 'ログインしました。');
             }
 
