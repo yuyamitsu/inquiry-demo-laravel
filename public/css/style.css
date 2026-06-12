@@ -1149,3 +1149,140 @@ td {
     font-size: 14px;
     line-height: 1.8;
 }
+
+/*
+|--------------------------------------------------------------------------
+| Dashboard
+|--------------------------------------------------------------------------
+*/
+
+.dashboardSummary {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.dashboardCard {
+    display: block;
+    min-height: 94px;
+    padding: 18px 20px;
+    color: #111827;
+    text-decoration: none;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-left: 6px solid #64748b;
+    border-radius: 12px;
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.05);
+}
+
+.dashboardCard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(15, 23, 42, 0.1);
+}
+
+.dashboardCard span {
+    display: block;
+    margin-bottom: 10px;
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.dashboardCard strong {
+    display: block;
+    font-size: 32px;
+    line-height: 1;
+}
+
+.dashboardNew {
+    border-left-color: #ef4444;
+}
+
+.dashboardProgress {
+    border-left-color: #3b82f6;
+}
+
+.dashboardAnswered {
+    border-left-color: #22c55e;
+}
+
+.dashboardClosed {
+    border-left-color: #9ca3af;
+}
+
+.dashboardWarning,
+.dashboardUrgent {
+    border-left-color: #dc2626;
+    background-color: #fff7f7;
+}
+
+.dashboardToday {
+    border-left-color: #f59e0b;
+    background-color: #fffbeb;
+}
+
+.dashboardUnassigned {
+    border-left-color: #6b7280;
+    background-color: #f9fafb;
+}
+
+.dashboardMine {
+    border-left-color: #8b5cf6;
+    background-color: #faf5ff;
+}
+
+.dashboardGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.dashboardListItem {
+    padding: 14px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.dashboardListItem:last-child {
+    border-bottom: none;
+}
+
+.dashboardListItem a {
+    display: inline-block;
+    margin-bottom: 8px;
+    color: #2563eb;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.dashboardListItem a:hover {
+    text-decoration: underline;
+}
+
+.dashboardMeta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.dashboardListWarning a {
+    color: #dc2626;
+}
+
+@media (max-width: 900px) {
+    .dashboardSummary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dashboardGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboardSummary {
+        grid-template-columns: 1fr;
+    }
+}
