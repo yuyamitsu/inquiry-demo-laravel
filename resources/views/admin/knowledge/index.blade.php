@@ -12,12 +12,18 @@
     <div class="pageHeader">
         <div>
             <h1>ナレッジ一覧</h1>
-            <p>問い合わせ対応から作成したナレッジを検索・確認できます。</p>
+            <p>問い合わせ対応から作成したナレッジや、自由作成したナレッジを検索・確認できます。</p>
         </div>
 
-        <a href="{{ route('admin.inquiries.index') }}" class="button subButton">
-            問い合わせ一覧へ
-        </a>
+        <div class="pageActions">
+            <a href="{{ route('admin.knowledge.create') }}" class="button">
+                ナレッジ新規作成
+            </a>
+
+            <a href="{{ route('admin.inquiries.index') }}" class="button subButton">
+                問い合わせ一覧へ
+            </a>
+        </div>
     </div>
 
     <form method="GET" action="{{ route('admin.knowledge.index') }}" class="searchBox">

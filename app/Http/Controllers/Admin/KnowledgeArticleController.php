@@ -56,6 +56,16 @@ class KnowledgeArticleController extends Controller
         ));
     }
 
+    public function create()
+    {
+        return view('admin.knowledge.create', [
+            'inquiry' => null,
+            'title' => '',
+            'category' => '',
+            'body' => '',
+        ]);
+    }
+
     public function createFromInquiry(Inquiry $inquiry)
     {
         $inquiry->load(['comments.user', 'user', 'assignee']);

@@ -141,6 +141,9 @@ Route::middleware(['auth', 'admin'])
         Route::get('/knowledge', [KnowledgeArticleController::class, 'index'])
             ->name('knowledge.index');
 
+        Route::get('/knowledge/create', [KnowledgeArticleController::class, 'create'])
+            ->name('knowledge.create');
+
         Route::post('/knowledge', [KnowledgeArticleController::class, 'store'])
             ->name('knowledge.store');
 
@@ -225,4 +228,3 @@ Route::middleware('auth')
         Route::put('/password', [PasswordController::class, 'update'])
             ->name('password.update');
     });
-    

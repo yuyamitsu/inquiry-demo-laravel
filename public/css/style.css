@@ -50,6 +50,13 @@ h2 {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    flex-shrink: 0;
+}
+
+.pageActions .button {
+    white-space: nowrap;
 }
 
 .linkArea {
@@ -1002,6 +1009,17 @@ textarea {
     .searchBox input,
     .searchBox select {
         width: 100%;
+    }
+
+    .pageActions {
+    width: 100%;
+    justify-content: flex-start;
+    }
+
+    .pageActions .button {
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
     }
 }
 
