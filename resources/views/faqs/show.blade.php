@@ -31,23 +31,40 @@
         </div>
     </div>
 
-    <section class="card">
-        <p class="faqMeta">
-            {{ $faq->category ?? '未分類' }}
-        </p>
+    <section class="card faqDetailCard">
+        <div class="faqMeta">
+            <span class="faqCategory">
+                {{ $faq->category ?? '未分類' }}
+            </span>
+        </div>
 
-        <h2>{{ $faq->title }}</h2>
+        <div class="faqQuestionBlock">
+            <span class="faqQuestionLabel">Q</span>
 
-        <div class="faqBody">
-            {!! nl2br(e($faq->body)) !!}
+            <h2>
+                {{ $faq->title }}
+            </h2>
+        </div>
+
+        <div class="faqAnswerBlock">
+            <span class="faqAnswerLabel">A</span>
+
+            <div class="faqAnswerBody">
+                {!! nl2br(e($faq->body)) !!}
+            </div>
         </div>
     </section>
 
-    <section class="card">
-        <h2>問い合わせへ進む</h2>
-        <p>
-            このFAQを確認しても解決しない場合は、以下にチェックを入れて問い合わせフォームへ進んでください。
-        </p>
+    <section class="card faqActionCard">
+        <div class="faqActionHeader">
+            <span class="faqActionLabel">解決しない場合</span>
+
+            <h2>問い合わせへ進む</h2>
+
+            <p>
+                このFAQを確認しても解決しない場合は、以下にチェックを入れて問い合わせフォームへ進んでください。
+            </p>
+        </div>
 
         <form method="POST" action="{{ route('faqs.confirm') }}">
             @csrf
