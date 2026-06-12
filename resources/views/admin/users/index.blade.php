@@ -2,7 +2,7 @@
 
 @section('title', 'ユーザー管理')
 @section('breadcrumbs')
-    <a href="{{ route('admin.inquiries.index') }}">問い合わせ一覧</a>
+    <a href="{{ route('admin.dashboard.index') }}">ダッシュボード</a>
     <span class="breadcrumbSeparator">＞</span>
     <span>ユーザー管理</span>
 @endsection
@@ -17,10 +17,6 @@
         <div class="pageActions">
             <a href="{{ route('admin.users.create') }}" class="button">
                 新規ユーザー作成
-            </a>
-
-            <a href="{{ route('admin.inquiries.index') }}" class="button subButton">
-                問い合わせ一覧へ
             </a>
         </div>
     </div>

@@ -3,7 +3,7 @@
 @section('title', 'ナレッジ一覧')
 
 @section('breadcrumbs')
-    <a href="{{ route('admin.inquiries.index') }}">問い合わせ一覧</a>
+    <a href="{{ route('admin.dashboard.index') }}">ダッシュボード</a>
     <span class="breadcrumbSeparator">＞</span>
     <span>ナレッジ一覧</span>
 @endsection
@@ -18,10 +18,6 @@
         <div class="pageActions">
             <a href="{{ route('admin.knowledge.create') }}" class="button">
                 ナレッジ新規作成
-            </a>
-
-            <a href="{{ route('admin.inquiries.index') }}" class="button subButton">
-                問い合わせ一覧へ
             </a>
         </div>
     </div>

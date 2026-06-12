@@ -2,6 +2,8 @@
 
 @section('title', '問い合わせ詳細')
 @section('breadcrumbs')
+    <a href="{{ route('admin.dashboard.index') }}">ダッシュボード</a>
+    <span class="breadcrumbSeparator">＞</span>
     <a href="{{ route('admin.inquiries.index') }}">問い合わせ一覧</a>
     <span class="breadcrumbSeparator">＞</span>
     <span>問い合わせ詳細 #{{ $inquiry->id }}</span>

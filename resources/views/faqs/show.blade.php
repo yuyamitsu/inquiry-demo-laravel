@@ -3,8 +3,17 @@
 @section('title', 'FAQ詳細')
 
 @section('breadcrumbs')
+    @if (in_array(auth()->user()->role, ['admin', 'staff'], true))
+        <a href="{{ route('admin.dashboard.index') }}">ダッシュボード</a>
+        <span class="breadcrumbSeparator">＞</span>
+    @else
+        <a href="{{ route('my.inquiries.index') }}">自分の問い合わせ</a>
+        <span class="breadcrumbSeparator">＞</span>
+    @endif
+
     <a href="{{ route('faqs.index') }}">FAQ</a>
     <span class="breadcrumbSeparator">＞</span>
+
     <span>{{ $faq->title }}</span>
 @endsection
 
@@ -44,7 +53,7 @@
             @csrf
 
             <div class="formGroup">
-                <label>
+                <label class="checkboxLabel">
                     <input type="checkbox" name="faq_checked" value="1" required>
                     FAQを確認しました
                 </label>

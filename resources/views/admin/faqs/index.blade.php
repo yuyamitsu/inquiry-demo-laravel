@@ -3,6 +3,8 @@
 @section('title', 'FAQ管理')
 
 @section('breadcrumbs')
+    <a href="{{ route('admin.dashboard.index') }}">ダッシュボード</a>
+    <span class="breadcrumbSeparator">＞</span>
     <span>FAQ管理</span>
 @endsection
 

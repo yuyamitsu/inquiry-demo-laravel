@@ -3,6 +3,8 @@
 @section('title', 'FAQ登録')
 
 @section('breadcrumbs')
+    <a href="{{ route('admin.dashboard.index') }}">ダッシュボード</a>
+    <span class="breadcrumbSeparator">＞</span>
     <a href="{{ route('admin.faqs.index') }}">FAQ管理</a>
     <span class="breadcrumbSeparator">＞</span>
     <span>FAQ登録</span>
@@ -17,7 +19,7 @@
 
         <div class="pageActions">
             <a href="{{ route('admin.faqs.index') }}" class="button subButton">
-                FAQ一覧に戻る
+                FAQ管理に戻る
             </a>
         </div>
     </div>

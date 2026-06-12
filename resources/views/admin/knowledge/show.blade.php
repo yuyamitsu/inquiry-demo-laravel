@@ -2,7 +2,7 @@
 
 @section('title', 'ナレッジ詳細')
 @section('breadcrumbs')
-    <a href="{{ route('admin.inquiries.index') }}">問い合わせ一覧</a>
+    <a href="{{ route('admin.dashboard.index') }}">ダッシュボード</a>
     <span class="breadcrumbSeparator">＞</span>
     <a href="{{ route('admin.knowledge.index') }}">ナレッジ一覧</a>
     <span class="breadcrumbSeparator">＞</span>

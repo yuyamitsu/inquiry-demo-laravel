@@ -3,7 +3,15 @@
 @section('title', 'よくある質問')
 
 @section('breadcrumbs')
-    <span>FAQ</span>
+    @if (in_array(auth()->user()->role, ['admin', 'staff'], true))
+        <a href="{{ route('admin.dashboard.index') }}">ダッシュボード</a>
+        <span class="breadcrumbSeparator">＞</span>
+        <span>FAQ</span>
+    @else
+        <a href="{{ route('my.inquiries.index') }}">自分の問い合わせ</a>
+        <span class="breadcrumbSeparator">＞</span>
+        <span>FAQ</span>
+    @endif
 @endsection
 
 @section('content')
