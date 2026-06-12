@@ -21,15 +21,6 @@
         </div>
 
         <div class="pageActions">
-            @if (in_array(auth()->user()->role, ['admin', 'staff'], true))
-                <a href="{{ route('admin.dashboard.index') }}" class="button subButton">
-                    ダッシュボードへ
-                </a>
-            @else
-                <a href="{{ route('my.inquiries.index') }}" class="button subButton">
-                    自分の問い合わせへ
-                </a>
-            @endif
         </div>
     </div>
 
